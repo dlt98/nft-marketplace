@@ -7,7 +7,8 @@ import {
   CreatorDashboard,
   MyAssets,
 } from "./components/pages";
-import Sidebar from "./components/navigation/Sidebar";
+import Sidebar from "./components/layout/Sidebar";
+import Container from "./components/layout/Container";
 
 declare var window: any;
 
@@ -28,13 +29,15 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Sidebar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create-item" element={<CreateItem />} />
-        <Route path="/my-assets" element={<CreatorDashboard />} />
-        <Route path="/creator-dashboard" element={<MyAssets />} />
-      </Routes>
+      <Sidebar walletAddress={walletAddress} />
+      <Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-item" element={<CreateItem />} />
+          <Route path="/my-assets" element={<CreatorDashboard />} />
+          <Route path="/creator-dashboard" element={<MyAssets />} />
+        </Routes>
+      </Container>
     </BrowserRouter>
   );
 };
