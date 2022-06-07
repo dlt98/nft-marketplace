@@ -63,10 +63,13 @@ const App = () => {
       <Sidebar walletAddress={walletAddress} />
       <Container>
         {isLoading ? (
-          <Spinner />
+          <Spinner label="Awaiting metamask connection..." />
         ) : (
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={<Home marketplace={marketplace} nft={nft} />}
+            />
             <Route path="/create-item" element={<CreateItem />} />
             <Route path="/my-assets" element={<CreatorDashboard />} />
             <Route path="/creator-dashboard" element={<MyAssets />} />
