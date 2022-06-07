@@ -49,14 +49,14 @@ const App = () => {
     );
     setMarketplace(marketplace);
     const nft = new ethers.Contract(NFTAdress.address, NFT.abi, signer);
-    setMarketplace(nft);
-    // setIsLoading(false);
+    setNft(nft);
+    setIsLoading(false);
   };
 
   useEffect(() => {
     connectMetamask();
     web3provider();
-  });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <BrowserRouter>

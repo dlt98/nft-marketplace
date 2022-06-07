@@ -1,7 +1,6 @@
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { NFTtype, HomeProps } from "../../utils";
-import { Spinner, NFT } from "../common";
+import { Spinner, NFT, UserAnnouncement } from "../common";
 
 const Home = ({ nft, marketplace }: HomeProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,7 +10,7 @@ const Home = ({ nft, marketplace }: HomeProps) => {
     const itemCount = await marketplace.itemCount();
 
     let tempItems = [];
-    for (let i = 0; i <= itemCount; i++) {
+    for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i);
       if (!item.sold) {
         //get uri from nft contract
@@ -36,7 +35,12 @@ const Home = ({ nft, marketplace }: HomeProps) => {
     }
 
     setItems(tempItems);
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    loadMarketplaceItems();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const buyMarketItems = async (item: any) => {
     await (
@@ -48,12 +52,21 @@ const Home = ({ nft, marketplace }: HomeProps) => {
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
+  if (!items.length) return <UserAnnouncement text="Theres nothing here :(" />;
+
   return (
     <div className="flex justify-center">
       <div className="px-4" style={{ maxWidth: "1600px" }}>
         <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((nft, idx) => (
-            
+            <NFT
+              name={nft.name}
+              description={nft.description}
+              image={nft.image}
+              price={nft.totalPrice}
+              onClick={() => buyMarketItems(nft)}
+              key={idx}
+            />
           ))}
         </div>
       </div>
