@@ -1,11 +1,11 @@
 import NavItem from "./NavItem";
-import { NAV_ITEMS, SidebarType, copyToClipboard } from "../../utils";
+import { NAV_ITEMS, SidebarProps, copyToClipboard } from "../../utils";
 import "../../styles/navigation.css";
 import { cryptoWallet } from "../../images/navigation";
 
-const Sidebar = ({ walletAddress }: SidebarType) => {
+const Sidebar = ({ walletAddress }: SidebarProps) => {
   return (
-    <div className="fixed top-0 left-0 flex flex-col w-16 h-screen m-0 text-white bg-cyan-100">
+    <nav className="fixed top-0 left-0 flex flex-col w-16 h-screen m-0 text-white bg-cyan-100">
       {NAV_ITEMS.map((navItem, idx) => (
         <NavItem
           title={navItem.title}
@@ -22,7 +22,7 @@ const Sidebar = ({ walletAddress }: SidebarType) => {
           onClick={copyToClipboard}
         />
       </div>
-    </div>
+    </nav>
   );
 };
 
