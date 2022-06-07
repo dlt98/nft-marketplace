@@ -20,3 +20,7 @@ export interface NFTProps {
   price: string;
   onClick: () => void;
 }
+
+export interface UserAnnouncementProps {
+  text: string;
+}
