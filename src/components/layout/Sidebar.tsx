@@ -5,7 +5,7 @@ import { cryptoWallet } from "../../images/navigation";
 
 const Sidebar = ({ walletAddress }: SidebarType) => {
   return (
-    <div className="fixed top-0 left-0 flex flex-col w-16 h-screen m-0 text-white bg-cyan-100">
+    <nav className="fixed top-0 left-0 flex flex-col w-16 h-screen m-0 text-white bg-cyan-100">
       {NAV_ITEMS.map((navItem, idx) => (
         <NavItem
           title={navItem.title}
@@ -22,7 +22,7 @@ const Sidebar = ({ walletAddress }: SidebarType) => {
           onClick={copyToClipboard}
         />
       </div>
-    </div>
+    </nav>
   );
 };
 
