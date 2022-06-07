@@ -1,0 +1,20 @@
+.sidebar-icon {
+  /*Positioning*/
+  @apply relative flex items-center justify-center;
+
+  /*Size and margins*/
+  @apply mx-auto mt-2 mb-2 w-14 h-14 rounded-3xl;
+
+  /*Aesthetics*/
+  @apply bg-blue-200 shadow-lg;
+
+  /*Hover effects*/
+  @apply hover:bg-cyan-50 hover:text-white hover:rounded-xl;
+
+  /*Animation*/
+  @apply transition-all ease-linear cursor-pointer;
+}
+
+.sidebar-tooltip {
+  @apply absolute w-auto p-2 m-2 text-xs font-bold text-white transition-all origin-left scale-0 bg-gray-900 rounded-md shadow-md min-w-max left-14;
+}
