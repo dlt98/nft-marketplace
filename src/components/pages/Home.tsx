@@ -1,25 +1,33 @@
 import { useEffect, useState } from "react";
-import { NFTtype, HomeProps } from "../../utils";
+import { NFTtype, PageProps } from "../../utils";
 import { Spinner, NFT, UserAnnouncement } from "../common";
 
-const Home = ({ nft, marketplace }: HomeProps) => {
+const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<NFTtype[]>([]);
 
   const loadMarketplaceItems = async () => {
     const itemCount = await marketplace.itemCount();
 
-    let tempItems = [];
+    let tempItems: NFTtype[] = [];
+    console.log("itemCount", itemCount);
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i);
       if (!item.sold) {
         //get uri from nft contract
-        const uri: string = await nft.tokenURI(item.tokenId);
+        const uri = await nft.tokenURI(item.tokenId);
+
+        console.log("uri", uri);
 
         //use uri to fetch the nft metadata store on ipfs
-        const res = await fetch(uri);
-        const metadata = await res.json();
+        const res = await fetch(uri, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        });
 
+        const metadata = await res.json();
         //get total price of item (item price + fee)
         const totalPrice: string = await marketplace.getTotalPrice(item.itemId);
 

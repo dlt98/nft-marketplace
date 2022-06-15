@@ -1,4 +1,4 @@
-export interface HomeProps {
+export interface PageProps {
   marketplace: any;
   nft: any;
 }

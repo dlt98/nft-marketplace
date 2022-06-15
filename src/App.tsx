@@ -70,7 +70,10 @@ const App = () => {
               path="/"
               element={<Home marketplace={marketplace} nft={nft} />}
             />
-            <Route path="/create-item" element={<CreateItem />} />
+            <Route
+              path="/create-item"
+              element={<CreateItem marketplace={marketplace} nft={nft} />}
+            />
             <Route path="/my-assets" element={<CreatorDashboard />} />
             <Route path="/creator-dashboard" element={<MyAssets />} />
           </Routes>
