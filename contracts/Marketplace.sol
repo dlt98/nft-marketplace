@@ -4,6 +4,7 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "hardhat/console.sol";
 
 contract Marketplace is ReentrancyGuard {
   //State variables
@@ -54,10 +55,14 @@ contract Marketplace is ReentrancyGuard {
   ) external nonReentrant {
     require(_price > 0, "Price must be greater than zero");
 
+    console.log("THIS IS WORKIG");
+
     itemCount++;
 
     //Transfer the NFT to the marketplace
     _nft.transferFrom(msg.sender, address(this), _tokenId);
+
+    console.log("GOT AFTER TRANFER FROM");
 
     //Add new item to items mapping
     items[itemCount] = Item(
