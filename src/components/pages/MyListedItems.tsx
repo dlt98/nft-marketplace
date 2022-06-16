@@ -1,100 +1,80 @@
 import { useState, useEffect } from "react";
 import { MyListedItemsProps, NFTtype } from "../../types";
-import { Spinner, UserAnnouncement, NFT } from "../common";
-import { BigNumberish } from "ethers";
+import { Spinner, UserAnnouncement } from "../common";
+import { formatBigNumber } from "../../utils";
 
 const MyListedItems = ({ marketplace, nft, account }: MyListedItemsProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [listedItems, setListedItems] = useState<NFTtype[]>([]);
-  const [soldItems, setSoldItems] = useState<NFTtype[]>([]);
+  const [purchases, setPurchases] = useState<NFTtype[]>([]);
 
   useEffect(() => {
     loadNFTs();
   }, []);
 
   const loadNFTs = async () => {
-    const itemCount = await marketplace.itemCount();
-    const listedItems: NFTtype[] = [];
-    const soldItems: NFTtype[] = [];
+    // Fetch purchased items from marketplace by quering Offered events with the buyer set as the user
+    const filter = marketplace.filters.Bought(
+      null,
+      null,
+      null,
+      null,
+      null,
+      account
+    );
+    const results = await marketplace.queryFilter(filter);
 
-    console.log("LoadNFTS started");
-    console.log("itemCount", itemCount);
+    //Fetch metadata of each nft and add that to listedItem object
+    const purchases: NFTtype[] = await Promise.all(
+      results.map(async (i: any) => {
+        //fetch arguments from each result
+        i = i.args;
 
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i);
+        //get uri url from nft contract
+        const uri: string = await nft.tokenURI(i.tokenId);
 
-      if (item.seller.toLowerCase() === account) {
-        const uri: string = await nft.tokenURI(item.tokenId);
-        //use uri to fetch the nft metadata
+        //use uri to fetch the nft metadata stored on ipfs
         const res = await fetch(uri);
         const metadata = await res.json();
 
-        //get total price of item (item price + fee)
-        const totalPrice: BigNumberish = await marketplace.getTotalPrice(
-          item.itemId
-        );
+        //get total price
+        const totalPrice = await marketplace.getTotalPrice(i.itemId);
 
-        //define listed item object
-        const tempItem: NFTtype = {
+        const tempItem = {
           totalPrice,
-          price: item.price,
-          itemId: item.itemId,
-          name: metadata.name,
+          price: i.price,
+          itemId: i.itemId,
+          nema: metadata.name,
           description: metadata.description,
           image: metadata.image,
         };
 
-        listedItems.push(tempItem);
-        listedItems.push(tempItem);
-        listedItems.push(tempItem);
+        return tempItem;
+      })
+    );
 
-        //Add listen item to sold
-        if (item.sold) soldItems.push(tempItem);
-        if (item.sold) soldItems.push(tempItem);
-        if (item.sold) soldItems.push(tempItem);
-      }
-
-      setIsLoading(false);
-      setListedItems(listedItems);
-      setSoldItems(soldItems);
-    }
+    setIsLoading(false);
+    setPurchases(purchases);
   };
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  if (!listedItems.length)
+  if (!purchases.length)
     return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
-    <div className="flex flex-col justify-center">
+    <div>
       <div className="p-4">
-        <h3>Listen items</h3>
+        <h2 className="py-2 text-2xl">Items bought</h2>
         <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {listedItems.map((nft, idx) => {
-            console.log("nft", nft);
-            return (
-              <NFT
-                description={nft.description}
-                image={nft.image}
-                name={nft.name}
-                price={nft.price!}
-                onClick={() => {}}
-              />
-            );
-          })}
-        </div>
-      </div>
-      <div className="p-4">
-        <h3>Sold items</h3>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {soldItems?.map((nft, idx) => (
-            <NFT
-              description={nft.description}
-              image={nft.image}
-              name={nft.name}
-              price={nft.price!}
-              onClick={() => {}}
-            />
+          {purchases.map((nft, idx) => (
+            <div className="overflow-hidden border shadow rounded-xl">
+              <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
+              <div className="p-4 bg-black">
+                <p className="text-2xl font-bold text-white">
+                  Price - {formatBigNumber(nft.price!)} Eth
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
