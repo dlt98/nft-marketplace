@@ -7,7 +7,7 @@ import {
   Home,
   CreateItem,
   CreatorDashboard,
-  MyAssets,
+  MyListedItems,
 } from "./components/pages";
 
 import { Container, Sidebar } from "./components/layout/";
@@ -74,8 +74,17 @@ const App = () => {
               path="/create-item"
               element={<CreateItem marketplace={marketplace} nft={nft} />}
             />
-            <Route path="/my-assets" element={<CreatorDashboard />} />
-            <Route path="/creator-dashboard" element={<MyAssets />} />
+            <Route
+              path="/my-assets"
+              element={
+                <MyListedItems
+                  marketplace={marketplace}
+                  nft={nft}
+                  account={walletAddress}
+                />
+              }
+            />
+            <Route path="/creator-dashboard" element={<CreatorDashboard />} />
           </Routes>
         )}
       </Container>
