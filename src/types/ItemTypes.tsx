@@ -1,5 +1,7 @@
+import { BigNumberish } from "ethers";
+
 export interface NFTtype {
-  totalPrice: string;
+  totalPrice: BigNumberish;
   itemId: string;
   seller: string;
   name: string;

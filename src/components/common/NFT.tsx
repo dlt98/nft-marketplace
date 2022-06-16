@@ -1,4 +1,5 @@
-import { NFTProps } from "../../utils";
+import { NFTProps } from "../../types";
+import { convertBigNumber } from "../../utils";
 
 const NFT = ({ image, name, description, price, onClick }: NFTProps) => (
   <div className="overflow-hidden border shadow rounded-xl">
@@ -12,7 +13,9 @@ const NFT = ({ image, name, description, price, onClick }: NFTProps) => (
       </div>
     </div>
     <div className="p-4 bg-black">
-      <p className="text-white text-2xl-mb 4-font-bold">{price} Ethereum</p>
+      <p className="text-white text-2xl-mb 4-font-bold">
+        {convertBigNumber(price)} Ethereum
+      </p>
       <button
         className="w-full px-12 py-2 font-bold text-white bg-pink-500 rounded"
         onClick={onClick}

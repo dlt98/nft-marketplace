@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NFTtype, PageProps } from "../../utils";
+import { NFTtype, PageProps } from "../../types";
 import { Spinner, NFT, UserAnnouncement } from "../common";
 
 const Home = ({ nft, marketplace }: PageProps) => {
@@ -7,17 +7,14 @@ const Home = ({ nft, marketplace }: PageProps) => {
   const [items, setItems] = useState<NFTtype[]>([]);
 
   const loadMarketplaceItems = async () => {
-    const itemCount = await marketplace.itemCount();
+    const itemCount: number = await marketplace.itemCount();
 
     let tempItems: NFTtype[] = [];
-    console.log("itemCount", itemCount);
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i);
       if (!item.sold) {
         //get uri from nft contract
         const uri = await nft.tokenURI(item.tokenId);
-
-        console.log("uri", uri);
 
         //use uri to fetch the nft metadata store on ipfs
         const res = await fetch(uri, {

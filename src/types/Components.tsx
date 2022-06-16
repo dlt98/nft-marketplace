@@ -1,3 +1,5 @@
+import { BigNumberish } from "ethers";
+
 export interface NavItemType {
   title: string;
   url: string;
@@ -17,7 +19,7 @@ export interface NFTProps {
   image: string;
   name: string;
   description: string;
-  price: string;
+  price: BigNumberish;
   onClick: () => void;
 }
 
