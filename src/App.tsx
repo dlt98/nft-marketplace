@@ -74,8 +74,17 @@ const App = () => {
               path="/create-item"
               element={<CreateItem marketplace={marketplace} nft={nft} />}
             />
-            <Route path="/my-assets" element={<CreatorDashboard />} />
-            <Route path="/creator-dashboard" element={<MyAssets />} />
+            <Route
+              path="/my-assets"
+              element={
+                <MyAssets
+                  marketplace={marketplace}
+                  nft={nft}
+                  account={walletAddress}
+                />
+              }
+            />
+            <Route path="/creator-dashboard" element={<CreatorDashboard />} />
           </Routes>
         )}
       </Container>

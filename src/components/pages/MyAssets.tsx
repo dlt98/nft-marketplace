@@ -1,87 +1,100 @@
 import { useState, useEffect } from "react";
-import { ethers } from "ethers";
+import { MyAssetsProps, NFTtype } from "../../types";
+import { Spinner, UserAnnouncement, NFT } from "../common";
+import { formatBigNumber } from "../../utils";
+import { BigNumberish } from "ethers";
 
-const MyAssets = () => {
-  return <div>MyAssets</div>;
-  // const [nfts, setNfts] = useState<any[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
+const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [listedItems, setListedItems] = useState<NFTtype[]>([]);
+  const [soldItems, setSoldItems] = useState<NFTtype[]>([]);
 
-  // useEffect(() => {
-  //   // loadNFTs();
-  // }, []);
+  useEffect(() => {
+    loadNFTs();
+  }, []);
 
-  // const loadNFTs = async () => {
-  //   const web3Modal = new Web3Modal();
-  //   const connection = await web3Modal.connect();
+  const loadNFTs = async () => {
+    const itemCount = await marketplace.itemCount();
+    const listedItems: NFTtype[] = [];
+    const soldItems: NFTtype[] = [];
 
-  //   const provider = new ethers.providers.Web3Provider(connection);
-  //   const signer = provider.getSigner();
+    console.log("LoadNFTS started");
+    console.log("itemCount", itemCount);
 
-  //   const marketContract = new ethers.Contract(
-  //     nftMarketAddress,
-  //     Market.abi,
-  //     signer
-  //   );
-  //   const tokenContract = new ethers.Contract(nftAddress, NFT.abi, provider);
+    for (let i = 1; i <= itemCount; i++) {
+      const item = await marketplace.items(i);
 
-  //   console.log("marketContract", marketContract);
+      if (item.seller.toLowerCase() === account) {
+        const uri: string = await nft.tokenURI(item.tokenId);
+        //use uri to fetch the nft metadata
+        const res = await fetch(uri);
+        const metadata = await res.json();
 
-  //   const data = await marketContract.fetchMyNfts();
+        //get total price of item (item price + fee)
+        const totalPrice: BigNumberish = await marketplace.getTotalPrice(
+          item.itemId
+        );
 
-  //   const items = await Promise.all(
-  //     data.map(async (i: any) => {
-  //       const tokenUri = await tokenContract.tokenURI(i.tokenId);
-  //       const meta = await axios.get(tokenUri);
-  //       let price = ethers.utils.formatUnits(i.price.toString(), "ether");
+        //define listed item object
+        const tempItem: NFTtype = {
+          totalPrice,
+          price: item.price,
+          itemId: item.itemId,
+          name: metadata.name,
+          description: metadata.description,
+          image: metadata.image,
+        };
 
-  //       console.log("meta", meta);
-  //       let item = {
-  //         price,
-  //         tokenId: i.tokenId.toNumber(),
-  //         seller: i.seller,
-  //         owner: i.owner,
-  //         image: meta.data.image,
-  //       };
+        listedItems.push(tempItem);
 
-  //       return item;
-  //     })
-  //   );
+        //Add listen item to sold
+        if (item.sold) soldItems.push(tempItem);
+      }
 
-  //   setNfts(items);
-  //   setIsLoading(false);
-  // };
+      setIsLoading(false);
+      setListedItems(listedItems);
+      setSoldItems(soldItems);
+    }
+  };
 
-  // // console.log("isLoading", isLoading);
-  // // console.log("nfts", nfts);
+  if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  // if (isLoading && !nfts.length) {
-  //   return <h1 className="px-20 py-10 text-3xl">No assets owned</h1>;
-  // }
+  if (!listedItems.length)
+    return <UserAnnouncement text="Theres nothing here :(" />;
 
-  // return (
-  //   <div className="flex justify-center">
-  //     <div className="p-4">
-  //       <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-  //         {nfts.map((nft, idx) => {
-  //           console.log("nft", nft);
-  //           return (
-  //             <div
-  //               className="overflow-hidden border shadow rounded-xl"
-  //               key={idx}
-  //             >
-  //               <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
-  //               <div className="p-4 bg-black">
-  //                 <p className="text-2xl font-bold text-white">
-  //                   Price - {nft.price}
-  //                 </p>
-  //               </div>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  return (
+    <div className="flex justify-center">
+      <div className="p-4">
+        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+          {listedItems.map((nft, idx) => {
+            console.log("nft", nft);
+            return (
+              <div
+                className="overflow-hidden border shadow rounded-xl"
+                key={idx}
+              >
+                <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
+                <div className="p-4 bg-black">
+                  <p className="text-2xl font-bold text-white">
+                    Price - {formatBigNumber(nft.price!)}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+          {soldItems.map((nft, idx) => (
+            <NFT
+              description={nft.description}
+              image={nft.image}
+              name={nft.name}
+              price={nft.price!}
+              onClick={() => {}}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default MyAssets;
