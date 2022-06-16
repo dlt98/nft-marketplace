@@ -4,5 +4,9 @@ export interface PageProps {
 }
 
 export interface MyListedItemsProps extends PageProps {
-  account: any;
+  account: string;
+}
+
+export interface CreatorDashboardProps extends PageProps {
+  account: string;
 }

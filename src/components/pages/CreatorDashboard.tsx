@@ -1,100 +1,89 @@
 import { useState, useEffect } from "react";
-import { ethers } from "ethers";
+import { CreatorDashboardProps, NFTtype } from "../../types";
+import { formatBigNumber } from "../../utils";
+import { Spinner, UserAnnouncement } from "../common";
 
-const CreatorDashboard = () => {
-  return <div>CreatorDashboard</div>;
-  // const [nfts, setNfts] = useState<any[]>([]);
-  // const [sold, setSold] = useState<any[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
+const CreatorDashboard = ({
+  marketplace,
+  nft,
+  account,
+}: CreatorDashboardProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [purchases, setPurchases] = useState<NFTtype[]>([]);
 
-  // useEffect(() => {
-  //   // loadNFTs();
-  // }, []);
+  useEffect(() => {
+    loadNFTs();
+  }, []);
 
-  // const loadNFTs = async () => {
-  //   const web3Modal = new Web3Modal();
-  //   const connection = await web3Modal.connect();
+  const loadNFTs = async () => {
+    // Fetch purchased items from marketplace by quering Offered events with the buyer set as the user
+    const filter = marketplace.filters.Bought(
+      null,
+      null,
+      null,
+      null,
+      null,
+      account
+    );
+    const results = await marketplace.queryFilter(filter);
 
-  //   console.log("web3Modal", web3Modal);
-  //   console.log("connection", connection);
+    //Fetch metadata of each nft and add that to listedItem object
+    const purchases: NFTtype[] = await Promise.all(
+      results.map(async (i: any) => {
+        //fetch arguments from each result
+        i = i.args;
 
-  //   const provider = new ethers.providers.Web3Provider(connection);
-  //   const signer = provider.getSigner();
+        //get uri url from nft contract
+        const uri: string = await nft.tokenURI(i.tokenId);
 
-  //   const marketContract = new ethers.Contract(
-  //     nftMarketAddress,
-  //     Market.abi,
-  //     signer
-  //   );
-  //   const tokenContract = new ethers.Contract(nftAddress, NFT.abi, provider);
+        //use uri to fetch the nft metadata stored on ipfs
+        const res = await fetch(uri);
+        const metadata = await res.json();
 
-  //   const data = await marketContract.fetchItemsCreated();
+        //get total price
+        const totalPrice = await marketplace.getTotalPrice(i.itemId);
 
-  //   const items = await Promise.all(
-  //     data.map(async (i: any) => {
-  //       const tokenUri = await tokenContract.tokenURI(i.tokenId);
-  //       const meta = await axios.get(tokenUri);
-  //       let price = ethers.utils.formatUnits(i.price.toString(), "ether");
+        const tempItem = {
+          totalPrice,
+          price: i.price,
+          itemId: i.itemId,
+          nema: metadata.name,
+          description: metadata.description,
+          image: metadata.image,
+        };
 
-  //       console.log("meta", meta);
-  //       let item = {
-  //         price,
-  //         tokenId: i.tokenId.toNumber(),
-  //         seller: i.seller,
-  //         owner: i.owner,
-  //         sold: i.sold,
-  //         image: meta.data.image,
-  //       };
+        return tempItem;
+      })
+    );
 
-  //       return item;
-  //     })
-  //   );
+    setIsLoading(false);
+    setPurchases(purchases);
+  };
 
-  //   const soldItems = items.filter((i) => i.sold);
+  if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  //   setSold(soldItems);
-  //   setNfts(items);
-  //   setIsLoading(false);
-  // };
+  if (!purchases.length)
+    return <UserAnnouncement text="Theres nothing here :(" />;
 
-  // return (
-  //   <div>
-  //     <div className="p-4">
-  //       <h2 className="py-2 text-2xl">Items Created</h2>
-  //       <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-  //         {nfts.map((nft, idx) => (
-  //           <div className="overflow-hidden border shadow rounded-xl">
-  //             <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
-  //             <div className="p-4 bg-black">
-  //               <p className="text-2xl font-bold text-white">
-  //                 Price - {nft.price} Eth
-  //               </p>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     </div>
-  //     <div className="px-4">
-  //       {Boolean(sold.length) && (
-  //         <div>
-  //           <h2 className="py-2 text-2xl">Items sold</h2>
-  //           <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-  //             {sold.map((nft, idx) => (
-  //               <div className="overflow-hidden border shadow rounded-xl">
-  //                 <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
-  //                 <div className="p-4 bg-black">
-  //                   <p className="text-2xl font-bold text-white">
-  //                     Price - {nft.price} Eth
-  //                   </p>
-  //                 </div>
-  //               </div>
-  //             ))}
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   </div>
-  // );
+  return (
+    <div>
+      <div className="p-4">
+        <h2 className="py-2 text-2xl">Items Created</h2>
+        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+          {purchases.map((nft, idx) => (
+            <div className="overflow-hidden border shadow rounded-xl">
+              <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
+              <div className="p-4 bg-black">
+                <p className="text-2xl font-bold text-white">
+                  Price - {formatBigNumber(nft.price!)} Eth
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default CreatorDashboard;
