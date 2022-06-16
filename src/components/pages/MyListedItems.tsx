@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { MyAssetsProps, NFTtype } from "../../types";
+import { MyListedItemsProps, NFTtype } from "../../types";
 import { Spinner, UserAnnouncement, NFT } from "../common";
-import { formatBigNumber } from "../../utils";
 import { BigNumberish } from "ethers";
 
-const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
+const MyListedItems = ({ marketplace, nft, account }: MyListedItemsProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [listedItems, setListedItems] = useState<NFTtype[]>([]);
   const [soldItems, setSoldItems] = useState<NFTtype[]>([]);
@@ -46,8 +45,12 @@ const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
         };
 
         listedItems.push(tempItem);
+        listedItems.push(tempItem);
+        listedItems.push(tempItem);
 
         //Add listen item to sold
+        if (item.sold) soldItems.push(tempItem);
+        if (item.sold) soldItems.push(tempItem);
         if (item.sold) soldItems.push(tempItem);
       }
 
@@ -63,26 +66,28 @@ const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
     return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col justify-center">
       <div className="p-4">
+        <h3>Listen items</h3>
         <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {listedItems.map((nft, idx) => {
             console.log("nft", nft);
             return (
-              <div
-                className="overflow-hidden border shadow rounded-xl"
-                key={idx}
-              >
-                <img src={nft.image} alt={`nft-${idx}`} className="rounded" />
-                <div className="p-4 bg-black">
-                  <p className="text-2xl font-bold text-white">
-                    Price - {formatBigNumber(nft.price!)}
-                  </p>
-                </div>
-              </div>
+              <NFT
+                description={nft.description}
+                image={nft.image}
+                name={nft.name}
+                price={nft.price!}
+                onClick={() => {}}
+              />
             );
           })}
-          {soldItems.map((nft, idx) => (
+        </div>
+      </div>
+      <div className="p-4">
+        <h3>Sold items</h3>
+        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+          {soldItems?.map((nft, idx) => (
             <NFT
               description={nft.description}
               image={nft.image}
@@ -97,4 +102,4 @@ const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
   );
 };
 
-export default MyAssets;
+export default MyListedItems;

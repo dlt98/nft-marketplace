@@ -3,6 +3,6 @@ export interface PageProps {
   nft: any;
 }
 
-export interface MyAssetsProps extends PageProps {
+export interface MyListedItemsProps extends PageProps {
   account: any;
 }

@@ -7,7 +7,7 @@ import {
   Home,
   CreateItem,
   CreatorDashboard,
-  MyAssets,
+  MyListedItems,
 } from "./components/pages";
 
 import { Container, Sidebar } from "./components/layout/";
@@ -77,7 +77,7 @@ const App = () => {
             <Route
               path="/my-assets"
               element={
-                <MyAssets
+                <MyListedItems
                   marketplace={marketplace}
                   nft={nft}
                   account={walletAddress}
