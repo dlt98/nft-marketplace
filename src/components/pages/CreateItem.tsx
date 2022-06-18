@@ -58,9 +58,6 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
     // add nft to marketplace
     const listingPrice = ethers.utils.parseEther(price!.toString());
 
-    console.log("nft.address", nft.address);
-    console.log("id", id);
-    console.log("listingPrice", listingPrice);
     await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
   };
 
@@ -71,18 +68,18 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
           type="text"
           placeholder="Asset name"
           className="p-4 mt-8 border rounded"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value.trim())}
         />
         <textarea
           placeholder="Asset description"
           className="p-4 mt-2 border rounded"
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value.trim())}
         />
         <input
           type="text"
           placeholder="Asset price in Ethereum"
           className="p-4 mt-2 border rounded"
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(e.target.value.trim())}
         />
         <input
           type="file"

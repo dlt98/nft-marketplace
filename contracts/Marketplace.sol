@@ -18,6 +18,7 @@ contract Marketplace is ReentrancyGuard {
     IERC721 nft;
     uint256 tokenId;
     uint256 price;
+    address holder;
     address payable seller;
     bool sold;
   }
@@ -55,14 +56,10 @@ contract Marketplace is ReentrancyGuard {
   ) external nonReentrant {
     require(_price > 0, "Price must be greater than zero");
 
-    console.log("THIS IS WORKIG");
-
     itemCount++;
 
     //Transfer the NFT to the marketplace
     _nft.transferFrom(msg.sender, address(this), _tokenId);
-
-    console.log("GOT AFTER TRANFER FROM");
 
     //Add new item to items mapping
     items[itemCount] = Item(
@@ -70,6 +67,7 @@ contract Marketplace is ReentrancyGuard {
       _nft,
       _tokenId,
       _price,
+      address(this),
       payable(msg.sender),
       false
     );
@@ -93,8 +91,13 @@ contract Marketplace is ReentrancyGuard {
 
     //update item sold
     item.sold = true;
+
+    item.holder = msg.sender;
+
     //transfer nft to buyer
     item.nft.transferFrom(address(this), msg.sender, item.tokenId);
+
+    items[_itemId] = item;
 
     //emit Bought event
     emit Bought(
@@ -107,10 +110,10 @@ contract Marketplace is ReentrancyGuard {
     );
   }
 
-  function sellItem(uint256 _tokenId, uint256 _price) external nonReentrant {
+  function sellItem(uint256 _itemId, uint256 _price) external nonReentrant {
     require(_price > 0, "Price must be greater than zero");
 
-    Item storage item = items[_tokenId];
+    Item storage item = items[_itemId];
 
     //update item sold
     item.sold = false;
@@ -119,13 +122,41 @@ contract Marketplace is ReentrancyGuard {
     //set address of new seller
     item.seller = payable(msg.sender);
 
+    item.holder = address(this);
+
     //transfer nft to marketplace
     item.nft.transferFrom(msg.sender, address(this), item.tokenId);
 
     //set new item to mapping
-    items[_tokenId] = item;
+    items[_itemId] = item;
 
-    emit Offered(itemCount, address(item.nft), _tokenId, _price, msg.sender);
+    emit Offered(itemCount, address(item.nft), _itemId, _price, msg.sender);
+  }
+
+  function fetchMyNfts() public view returns (Item[] memory) {
+    uint256 totalItemCount = itemCount;
+    uint256 myNftCount = 0;
+    uint256 currentIndex = 0;
+
+    //Getting the length of the array
+    for (uint256 i = 1; i <= totalItemCount; i++) {
+      if (items[i].holder == msg.sender) {
+        myNftCount++;
+      }
+    }
+
+    Item[] memory myNfts = new Item[](myNftCount);
+
+    for (uint256 i = 1; i <= totalItemCount; i++) {
+      if (items[i].holder == msg.sender) {
+        uint256 currentId = items[i].itemId;
+        Item memory currentItem = items[currentId];
+        myNfts[currentIndex] = currentItem;
+        currentIndex++;
+      }
+    }
+
+    return myNfts;
   }
 
   function getTotalPrice(uint256 _itemId) public view returns (uint256) {

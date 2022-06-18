@@ -21,9 +21,6 @@ const CreatorDashboard = ({
     const listedItems: NFTtype[] = [];
     const soldItems: NFTtype[] = [];
 
-    console.log("LoadNFTS started");
-    console.log("itemCount", itemCount);
-
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i);
 
@@ -48,13 +45,11 @@ const CreatorDashboard = ({
           image: metadata.image,
         };
 
-        listedItems.push(tempItem);
-        listedItems.push(tempItem);
+        console.log("tempItem", tempItem);
+
         listedItems.push(tempItem);
 
         //Add listen item to sold
-        if (item.sold) soldItems.push(tempItem);
-        if (item.sold) soldItems.push(tempItem);
         if (item.sold) soldItems.push(tempItem);
       }
 
