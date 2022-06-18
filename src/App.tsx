@@ -18,7 +18,7 @@ declare var window: any;
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string>("");
   const [marketplace, setMarketplace] = useState<ethers.Contract | null>(null);
   const [nft, setNft] = useState<ethers.Contract | null>(null);
 
@@ -84,7 +84,16 @@ const App = () => {
                 />
               }
             />
-            <Route path="/creator-dashboard" element={<CreatorDashboard />} />
+            <Route
+              path="/creator-dashboard"
+              element={
+                <CreatorDashboard
+                  marketplace={marketplace}
+                  nft={nft}
+                  account={walletAddress}
+                />
+              }
+            />
           </Routes>
         )}
       </Container>
