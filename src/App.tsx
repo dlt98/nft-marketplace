@@ -14,6 +14,7 @@ import {
 import { Container, Sidebar } from "./components/layout/";
 
 import { Spinner } from "./components/common";
+import { upperCaseAndSpace } from "./utils";
 
 declare var window: any;
 
@@ -22,8 +23,11 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [marketplace, setMarketplace] = useState<ethers.Contract | null>(null);
   const [nft, setNft] = useState<ethers.Contract | null>(null);
-  const [profileImage, setprofileImage] = useState("");
-  const [profileChoice, setProfileChoice] = useState(PROFILE_OPTIONS[0]);
+  const [profileImage, setprofileImage] = useState<string>("");
+  const [profileChoice, setProfileChoice] = useState<any>({
+    value: PROFILE_OPTIONS[3],
+    label: upperCaseAndSpace(PROFILE_OPTIONS[3]),
+  });
 
   //Metamask get wallet address
   const connectMetamask = async () => {
@@ -57,8 +61,9 @@ const App = () => {
   };
 
   const getProfileImage = async () => {
+    if (!profileChoice.value) return;
     const res = await fetch(
-      `${AVATAR_URL}${profileChoice}/${walletAddress}.svg`
+      `${AVATAR_URL}${profileChoice.value}/${walletAddress}.svg`
     );
 
     setprofileImage(res.url);
@@ -71,7 +76,7 @@ const App = () => {
 
   useEffect(() => {
     getProfileImage();
-  }, [walletAddress]);
+  }, [walletAddress, profileChoice]);
 
   return (
     <BrowserRouter>
@@ -107,6 +112,7 @@ const App = () => {
                   nft={nft}
                   account={walletAddress}
                   profileImage={profileImage}
+                  profileChoice={profileChoice}
                   setProfileChoice={setProfileChoice}
                 />
               }

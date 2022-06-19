@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
 import { Spinner, UserAnnouncement, NFT, Headline } from "../common";
+import UserProfileSection from "../CreatorDashboardComponents/UserProfileSection";
 
 const CreatorDashboard = ({
   marketplace,
   nft,
   account,
   profileImage,
+  profileChoice,
   setProfileChoice,
 }: CreatorDashboardProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +17,8 @@ const CreatorDashboard = ({
   const [soldItems, setSoldItems] = useState<NFTtype[]>([]);
 
   useEffect(() => {
-    loadNFTs();
+    // loadNFTs();
+    setIsLoading(false);
   }, []);
 
   const loadNFTs = async () => {
@@ -110,8 +113,8 @@ const CreatorDashboard = ({
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  if (!listedItems.length)
-    return <UserAnnouncement text="Theres nothing here :(" />;
+  // if (!listedItems.length)
+  //   return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
     <div className="flex flex-col justify-center">
@@ -119,6 +122,12 @@ const CreatorDashboard = ({
         <Headline
           text="Creator dashboard"
           description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
+        />
+        <UserProfileSection
+          account={account}
+          profileChoice={profileChoice}
+          profileImage={profileImage}
+          setProfileChoice={setProfileChoice}
         />
         <h3>Listed items</h3>
         <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">

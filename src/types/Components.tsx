@@ -1,10 +1,11 @@
 import { BigNumberish } from "ethers";
+import { ActionMeta, SingleValue } from "react-select";
 
 export interface NavItemType {
   title: string;
   url: string;
   icon: string;
-  onClick?: (tex: string) => void;
+  onClick?: (text: string) => void;
 }
 
 export interface SidebarProps {
@@ -31,4 +32,31 @@ export interface UserAnnouncementProps {
 export interface HeadlineProps {
   text: string;
   description: string;
+}
+
+export interface UserProfileSectionProps {
+  profileImage: string;
+  account: string;
+  profileChoice: string;
+  setProfileChoice: (
+    newValue: SingleValue<string>,
+    actionMeta: ActionMeta<string>
+  ) => void;
+}
+
+export interface SelectProps {
+  options: any;
+  value: string;
+  onChange: (
+    newValue: SingleValue<string>,
+    actionMeta: ActionMeta<string>
+  ) => void;
+}
+export interface SelectProps {
+  options: any;
+  value: string;
+  onChange: (
+    newValue: SingleValue<string>,
+    actionMeta: ActionMeta<string>
+  ) => void;
 }
