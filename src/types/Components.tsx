@@ -27,3 +27,8 @@ export interface NFTProps {
 export interface UserAnnouncementProps {
   text: string;
 }
+
+export interface HeadlineProps {
+  text: string;
+  description: string;
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
-import { Spinner, UserAnnouncement, NFT } from "../common";
+import { Spinner, UserAnnouncement, NFT, Headline } from "../common";
 
 const CreatorDashboard = ({
   marketplace,
@@ -116,6 +116,10 @@ const CreatorDashboard = ({
   return (
     <div className="flex flex-col justify-center">
       <div className="p-4">
+        <Headline
+          text="Creator dashboard"
+          description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
+        />
         <h3>Listed items</h3>
         <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {listedItems.map((nft, idx) => {
