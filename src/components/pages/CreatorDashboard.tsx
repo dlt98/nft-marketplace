@@ -17,46 +17,93 @@ const CreatorDashboard = ({
   }, []);
 
   const loadNFTs = async () => {
-    const itemCount = await marketplace.itemCount();
-    const listedItems: NFTtype[] = [];
-    const soldItems: NFTtype[] = [];
+    if (!account) return;
 
-    for (let i = 1; i <= itemCount; i++) {
-      const item = await marketplace.items(i);
+    // Fetch purchased items from marketplace by quering Offered events with the buyer set as the user
+    const offeredFilter = marketplace.filters.Offered(
+      null,
+      null,
+      null,
+      null,
+      account
+    );
+    const boughtFilter = marketplace.filters.Bought(
+      null,
+      null,
+      null,
+      null,
+      account,
+      null
+    );
+    const offeredResults = await marketplace.queryFilter(offeredFilter);
+    const boughtResults = await marketplace.queryFilter(boughtFilter);
 
-      if (item.seller.toLowerCase() === account) {
-        const uri: string = await nft.tokenURI(item.tokenId);
-        //use uri to fetch the nft metadata
+    //Fetch metadata of each nft and add that to listedItem object
+    const listedItems: NFTtype[] = await Promise.all(
+      offeredResults.map(async (i: any) => {
+        //fetch arguments from each result
+        i = i.args;
+
+        //get uri url from nft contract
+        const uri: string = await nft.tokenURI(i.tokenId);
+
+        //use uri to fetch the nft metadata stored on ipfs
         const res = await fetch(uri);
         const metadata = await res.json();
 
         //get total price of item (item price + fee)
         const totalPrice: BigNumberish = await marketplace.getTotalPrice(
-          item.itemId
+          i.itemId
         );
 
         //define listed item object
         const tempItem: NFTtype = {
           totalPrice,
-          price: item.price,
-          itemId: item.itemId,
+          price: i.price,
+          itemId: i.itemId,
           name: metadata.name,
           description: metadata.description,
           image: metadata.image,
         };
 
-        console.log("tempItem", tempItem);
+        return tempItem;
+      })
+    );
 
-        listedItems.push(tempItem);
+    const soldItems: NFTtype[] = await Promise.all(
+      boughtResults.map(async (i: any) => {
+        //fetch arguments from each result
+        i = i.args;
 
-        //Add listen item to sold
-        if (item.sold) soldItems.push(tempItem);
-      }
+        //get uri url from nft contract
+        const uri: string = await nft.tokenURI(i.tokenId);
 
-      setIsLoading(false);
-      setListedItems(listedItems);
-      setSoldItems(soldItems);
-    }
+        //use uri to fetch the nft metadata stored on ipfs
+        const res = await fetch(uri);
+        const metadata = await res.json();
+
+        //get total price of item (item price + fee)
+        const totalPrice: BigNumberish = await marketplace.getTotalPrice(
+          i.itemId
+        );
+
+        //define listed item object
+        const tempItem: NFTtype = {
+          totalPrice,
+          price: i.price,
+          itemId: i.itemId,
+          name: metadata.name,
+          description: metadata.description,
+          image: metadata.image,
+        };
+
+        return tempItem;
+      })
+    );
+
+    setIsLoading(false);
+    setListedItems(listedItems);
+    setSoldItems(soldItems);
   };
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
@@ -67,7 +114,7 @@ const CreatorDashboard = ({
   return (
     <div className="flex flex-col justify-center">
       <div className="p-4">
-        <h3>Listen items</h3>
+        <h3>Listed items</h3>
         <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {listedItems.map((nft, idx) => {
             return (
@@ -77,6 +124,7 @@ const CreatorDashboard = ({
                 name={nft.name}
                 price={nft.price!}
                 onClick={() => {}}
+                key={`name-${idx}`}
               />
             );
           })}
@@ -92,6 +140,7 @@ const CreatorDashboard = ({
               name={nft.name}
               price={nft.price!}
               onClick={() => {}}
+              key={`name-${idx}`}
             />
           ))}
         </div>
