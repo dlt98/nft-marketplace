@@ -7,6 +7,8 @@ const CreatorDashboard = ({
   marketplace,
   nft,
   account,
+  profileImage,
+  setProfileChoice,
 }: CreatorDashboardProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [listedItems, setListedItems] = useState<NFTtype[]>([]);

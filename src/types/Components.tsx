@@ -9,6 +9,7 @@ export interface NavItemType {
 
 export interface SidebarProps {
   walletAddress: string | null;
+  profileImage: string;
 }
 
 export interface SpinnerProps {

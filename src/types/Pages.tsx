@@ -9,4 +9,6 @@ export interface MyListedItemsProps extends PageProps {
 
 export interface CreatorDashboardProps extends PageProps {
   account: string;
+  profileImage: string;
+  setProfileChoice: (arg0: string) => void;
 }

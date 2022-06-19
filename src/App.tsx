@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Marketplace, MarketplaceAddress, NFT, NFTAdress } from "./contracts";
+import { AVATAR_URL, PROFILE_OPTIONS } from "./utils/constants";
 
 import {
   Home,
@@ -21,6 +22,8 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [marketplace, setMarketplace] = useState<ethers.Contract | null>(null);
   const [nft, setNft] = useState<ethers.Contract | null>(null);
+  const [profileImage, setprofileImage] = useState("");
+  const [profileChoice, setProfileChoice] = useState(PROFILE_OPTIONS[0]);
 
   //Metamask get wallet address
   const connectMetamask = async () => {
@@ -53,14 +56,26 @@ const App = () => {
     setIsLoading(false);
   };
 
+  const getProfileImage = async () => {
+    const res = await fetch(
+      `${AVATAR_URL}${profileChoice}/${walletAddress}.svg`
+    );
+
+    setprofileImage(res.url);
+  };
+
   useEffect(() => {
     connectMetamask();
     web3provider();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    getProfileImage();
+  }, [walletAddress]);
+
   return (
     <BrowserRouter>
-      <Sidebar walletAddress={walletAddress} />
+      <Sidebar walletAddress={walletAddress} profileImage={profileImage} />
       <Container>
         {isLoading ? (
           <Spinner label="Awaiting metamask connection..." />
@@ -91,6 +106,8 @@ const App = () => {
                   marketplace={marketplace}
                   nft={nft}
                   account={walletAddress}
+                  profileImage={profileImage}
+                  setProfileChoice={setProfileChoice}
                 />
               }
             />
