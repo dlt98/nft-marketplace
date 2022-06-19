@@ -40,6 +40,15 @@ contract Marketplace is ReentrancyGuard {
     address indexed buyer
   );
 
+  event Sold(
+    uint256 itemId,
+    address indexed nft,
+    uint256 tokenId,
+    uint256 price,
+    address indexed buyer,
+    address indexed seller
+  );
+
   // itemId -> Item
   mapping(uint256 => Item) public items;
 
