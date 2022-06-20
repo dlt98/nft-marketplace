@@ -14,7 +14,7 @@ export interface SidebarProps {
 }
 
 export interface SpinnerProps {
-  label: string;
+  label?: string;
 }
 
 export interface NFTProps {
@@ -42,6 +42,8 @@ export interface UserProfileSectionProps {
     newValue: SingleValue<string>,
     actionMeta: ActionMeta<string>
   ) => void;
+  listedItems: string;
+  soldItems: string;
 }
 
 export interface SelectProps {
@@ -59,4 +61,11 @@ export interface SelectProps {
     newValue: SingleValue<string>,
     actionMeta: ActionMeta<string>
   ) => void;
+}
+
+export interface CopyProps {
+  text: string;
+  className: string;
+  children: any;
+  textRef: any;
 }
