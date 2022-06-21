@@ -67,3 +67,8 @@ export interface CopyProps {
   children: any;
   textRef: any;
 }
+
+export interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}
