@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
 import { Spinner, UserAnnouncement, NFT, Headline } from "../common";
-import UserProfileSection from "../CreatorDashboardComponents/UserProfileSection";
+import { UserProfileSection, Tabs } from "../CreatorDashboardComponents/";
 
 const CreatorDashboard = ({
   marketplace,
@@ -118,7 +118,7 @@ const CreatorDashboard = ({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="p-4">
+      <div className="w-full p-4">
         <Headline
           text="Creator dashboard"
           description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
@@ -129,9 +129,9 @@ const CreatorDashboard = ({
           profileImage={profileImage}
           setProfileChoice={setProfileChoice}
         />
-        <h3>Listed items</h3>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {listedItems.map((nft, idx) => {
+
+        <Tabs
+          tabContent1={listedItems?.map((nft, idx) => {
             return (
               <NFT
                 description={nft.description}
@@ -143,12 +143,7 @@ const CreatorDashboard = ({
               />
             );
           })}
-        </div>
-      </div>
-      <div className="p-4">
-        <h3>Sold items</h3>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {soldItems?.map((nft, idx) => (
+          tabContent2={soldItems?.map((nft, idx) => (
             <NFT
               description={nft.description}
               image={nft.image}
@@ -158,7 +153,7 @@ const CreatorDashboard = ({
               key={`name-${idx}`}
             />
           ))}
-        </div>
+        />
       </div>
     </div>
   );
