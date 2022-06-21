@@ -117,7 +117,7 @@ const CreatorDashboard = ({
   //   return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col items-center justify-center">
       <div className="p-4">
         <Headline
           text="Creator dashboard"

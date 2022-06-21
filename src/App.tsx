@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Marketplace, MarketplaceAddress, NFT, NFTAdress } from "./contracts";
-import { AVATAR_URL, PROFILE_OPTIONS } from "./utils/constants";
+import { PROFILE_OPTIONS } from "./utils/constants";
 
 import {
   Home,
@@ -14,7 +14,18 @@ import {
 import { Container, Sidebar } from "./components/layout/";
 
 import { Spinner } from "./components/common";
-import { upperCaseAndSpace } from "./utils";
+import {
+  upperCaseAndSpace,
+  saveToStorage,
+  UserSettings,
+  getSpecificSettingsFromStorage,
+  getProfileImage,
+} from "./utils";
+
+const defaultProfileChoiceValue = {
+  value: PROFILE_OPTIONS[3],
+  label: upperCaseAndSpace(PROFILE_OPTIONS[3]),
+};
 
 declare var window: any;
 
@@ -23,11 +34,8 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [marketplace, setMarketplace] = useState<ethers.Contract | null>(null);
   const [nft, setNft] = useState<ethers.Contract | null>(null);
-  const [profileImage, setprofileImage] = useState<string>("");
-  const [profileChoice, setProfileChoice] = useState<any>({
-    value: PROFILE_OPTIONS[3],
-    label: upperCaseAndSpace(PROFILE_OPTIONS[3]),
-  });
+  const [profileImage, setProfileImage] = useState<string>("");
+  const [profileChoice, setProfileChoice] = useState<any>();
 
   //Metamask get wallet address
   const connectMetamask = async () => {
@@ -36,6 +44,32 @@ const App = () => {
     });
     setWalletAddress(accounts[0]);
   };
+
+  useEffect(() => {
+    if (!walletAddress) return;
+
+    const tempProfileChoice =
+      getSpecificSettingsFromStorage(walletAddress)?.profileChoice ||
+      defaultProfileChoiceValue;
+
+    setProfileChoice(tempProfileChoice);
+    getProfileImage(tempProfileChoice.value, walletAddress, setProfileImage);
+  }, [walletAddress]);
+
+  useEffect(() => {
+    if (!profileChoice) return;
+    const userSettings: UserSettings = {
+      address: walletAddress,
+      profileChoice,
+    };
+
+    saveToStorage(walletAddress, userSettings);
+    getProfileImage(
+      userSettings.profileChoice.value,
+      walletAddress,
+      setProfileImage
+    );
+  }, [profileChoice]);
 
   const web3provider = async () => {
     // Get provider from Metamask
@@ -60,23 +94,10 @@ const App = () => {
     setIsLoading(false);
   };
 
-  const getProfileImage = async () => {
-    if (!profileChoice.value) return;
-    const res = await fetch(
-      `${AVATAR_URL}${profileChoice.value}/${walletAddress}.svg`
-    );
-
-    setprofileImage(res.url);
-  };
-
   useEffect(() => {
     connectMetamask();
     web3provider();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    getProfileImage();
-  }, [walletAddress, profileChoice]);
 
   return (
     <BrowserRouter>

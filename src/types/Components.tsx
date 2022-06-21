@@ -42,8 +42,6 @@ export interface UserProfileSectionProps {
     newValue: SingleValue<string>,
     actionMeta: ActionMeta<string>
   ) => void;
-  listedItems: string;
-  soldItems: string;
 }
 
 export interface SelectProps {

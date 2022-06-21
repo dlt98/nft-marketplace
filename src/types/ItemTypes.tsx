@@ -9,3 +9,7 @@ export interface NFTtype {
   description: string;
   image: string;
 }
+export interface UserSettings {
+  address: string;
+  profileChoice: any;
+}
