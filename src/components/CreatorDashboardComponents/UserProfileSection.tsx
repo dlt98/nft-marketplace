@@ -26,6 +26,8 @@ const UserProfileSection = ({
             <div
               className="absolute top-0 left-0 flex items-center justify-center w-full h-full transition-all scale-0 rounded-full cursor-pointer bg-pink-50/90 group-hover:scale-100"
               onClick={() => setEdditingProfile(true)}
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="dark"
             >
               Edit
             </div>

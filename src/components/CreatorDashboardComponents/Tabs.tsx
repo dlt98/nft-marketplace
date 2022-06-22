@@ -38,10 +38,13 @@ const Tabs = ({ tabContent1, tabContent2 }: TabsProps) => {
         </li>
       </ul>
       <div className="tab-content" id="tabs-tabContentJustify">
-        <div className="tab-pane fade show active" id="tabs-homeJustify">
+        <div
+          className="nft-display tab-pane fade show active"
+          id="tabs-homeJustify"
+        >
           {tabContent1}
         </div>
-        <div className="tab-pane fade" id="tabs-messagesJustify">
+        <div className="nft-display tab-pane fade" id="tabs-messagesJustify">
           {tabContent2}
         </div>
       </div>

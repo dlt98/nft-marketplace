@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
-import { Spinner, UserAnnouncement, NFT, Headline } from "../common";
+import { Spinner, UserAnnouncement, NFT, Headline, NewNft } from "../common";
 import { UserProfileSection, Tabs } from "../CreatorDashboardComponents/";
+
+import coolcatsPng from "../../images/coolcats.png";
 
 const CreatorDashboard = ({
   marketplace,
@@ -17,8 +19,7 @@ const CreatorDashboard = ({
   const [soldItems, setSoldItems] = useState<NFTtype[]>([]);
 
   useEffect(() => {
-    // loadNFTs();
-    setIsLoading(false);
+    loadNFTs();
   }, []);
 
   const loadNFTs = async () => {
@@ -113,8 +114,8 @@ const CreatorDashboard = ({
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  // if (!listedItems.length)
-  //   return <UserAnnouncement text="Theres nothing here :(" />;
+  if (!listedItems.length)
+    return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -133,24 +134,26 @@ const CreatorDashboard = ({
         <Tabs
           tabContent1={listedItems?.map((nft, idx) => {
             return (
-              <NFT
+              <NewNft
                 description={nft.description}
                 image={nft.image}
                 name={nft.name}
-                price={nft.price!}
+                price={nft.price!.toString()}
                 onClick={() => {}}
                 key={`name-${idx}`}
+                collection={"This is a collection"}
               />
             );
           })}
           tabContent2={soldItems?.map((nft, idx) => (
-            <NFT
+            <NewNft
               description={nft.description}
               image={nft.image}
               name={nft.name}
-              price={nft.price!}
+              price={nft.price!.toString()}
               onClick={() => {}}
               key={`name-${idx}`}
+              collection={"This is a collection"}
             />
           ))}
         />
