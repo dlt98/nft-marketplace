@@ -115,10 +115,6 @@ const CreatorDashboard = ({
 
   return (
     <div className="w-full p-4">
-      <Headline
-        text="Creator dashboard"
-        description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
-      />
       <UserProfileSection
         account={account}
         profileChoice={profileChoice}

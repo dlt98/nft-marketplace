@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { MyListedItemsProps, NFTtype } from "../../types";
+import { MyAssetsProps, NFTtype } from "../../types";
 import { Spinner, UserAnnouncement } from "../common";
 import { formatBigNumber, formatToEth } from "../../utils";
 
-const MyListedItems = ({ marketplace, nft, account }: MyListedItemsProps) => {
+const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [purchases, setPurchases] = useState<NFTtype[]>([]);
 
@@ -82,4 +82,4 @@ const MyListedItems = ({ marketplace, nft, account }: MyListedItemsProps) => {
   );
 };
 
-export default MyListedItems;
+export default MyAssets;

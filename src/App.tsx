@@ -8,12 +8,12 @@ import {
   Home,
   CreateItem,
   CreatorDashboard,
-  MyListedItems,
+  MyAssets,
 } from "./components/pages";
 
 import { Container, Sidebar } from "./components/layout/";
 
-import { Spinner } from "./components/common";
+import { Headline, Spinner } from "./components/common";
 import {
   upperCaseAndSpace,
   saveToStorage,
@@ -110,33 +110,61 @@ const App = () => {
           <Routes>
             <Route
               path="/"
-              element={<Home marketplace={marketplace} nft={nft} />}
+              element={
+                <>
+                  <Headline
+                    text="Home screen"
+                    description="This is the page where you can buy NFT's that users have created."
+                  />
+                  <Home marketplace={marketplace} nft={nft} />
+                </>
+              }
             />
             <Route
               path="/create-item"
-              element={<CreateItem marketplace={marketplace} nft={nft} />}
+              element={
+                <>
+                  <Headline
+                    text="Create New Item"
+                    description="This is the page that allows you to create your very own NFT. Fill out the required fields and confirm the transaction in your metamask wallet, and voila!"
+                  />
+                  <CreateItem marketplace={marketplace} nft={nft} />
+                </>
+              }
             />
             <Route
               path="/my-assets"
               element={
-                <MyListedItems
-                  marketplace={marketplace}
-                  nft={nft}
-                  account={walletAddress}
-                />
+                <>
+                  <Headline
+                    text="My digital assets"
+                    description="View all your purchased NFT's and place them back on the marketplace if you so chose"
+                  />
+                  <MyAssets
+                    marketplace={marketplace}
+                    nft={nft}
+                    account={walletAddress}
+                  />
+                </>
               }
             />
             <Route
               path="/creator-dashboard"
               element={
-                <CreatorDashboard
-                  marketplace={marketplace}
-                  nft={nft}
-                  account={walletAddress}
-                  profileImage={profileImage}
-                  profileChoice={profileChoice}
-                  setProfileChoice={setProfileChoice}
-                />
+                <>
+                  <Headline
+                    text="Creator dashboard"
+                    description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
+                  />
+                  <CreatorDashboard
+                    marketplace={marketplace}
+                    nft={nft}
+                    account={walletAddress}
+                    profileImage={profileImage}
+                    profileChoice={profileChoice}
+                    setProfileChoice={setProfileChoice}
+                  />
+                </>
               }
             />
           </Routes>
