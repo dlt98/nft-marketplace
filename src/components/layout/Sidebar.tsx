@@ -19,6 +19,7 @@ const Sidebar = ({ walletAddress, profileImage }: SidebarProps) => {
           title={walletAddress || ""}
           url={""}
           onClick={copyToClipboard}
+          profile
         />
       </div>
     </nav>

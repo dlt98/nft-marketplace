@@ -14,18 +14,18 @@ const UserProfileSection = ({
   const [edditingProfile, setEdditingProfile] = useState(false);
   const addressRef = useRef(null);
   return (
-    <div className="flex flex-col items-center p-3 border border-cyan-300">
+    <div className="flex flex-col items-center p-3 border rounded-xl border-cyan-300">
       <div className="h-min w-max">
         {profileImage ? (
-          <div className="relative mb-3 rounded-full h-52 w-52 group">
+          <div className="relative mb-3 border-2 rounded-full shadow h-52 w-52 group">
             <img
               src={profileImage}
               alt="User profile img"
-              className="w-full h-full mb-2 rounded-full"
+              className="w-full h-full mb-2 rounded-full "
             />
             <div
               className="absolute top-0 left-0 flex items-center justify-center w-full h-full transition-all scale-0 rounded-full cursor-pointer bg-pink-50/90 group-hover:scale-100"
-              onClick={() => setEdditingProfile(true)}
+              onClick={() => setEdditingProfile(!edditingProfile)}
               data-mdb-ripple="true"
               data-mdb-ripple-color="dark"
             >

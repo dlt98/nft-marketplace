@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
-import { Spinner, UserAnnouncement, NFT, Headline, NewNft } from "../common";
+import { Spinner, UserAnnouncement, Headline, NewNft } from "../common";
 import { UserProfileSection, Tabs } from "../CreatorDashboardComponents/";
-
-import coolcatsPng from "../../images/coolcats.png";
+import { formatBigNumber } from "../../utils";
 
 const CreatorDashboard = ({
   marketplace,
@@ -64,8 +63,8 @@ const CreatorDashboard = ({
 
         //define listed item object
         const tempItem: NFTtype = {
-          totalPrice,
-          price: i.price,
+          totalPrice: formatBigNumber(totalPrice),
+          price: formatBigNumber(i.price),
           itemId: i.itemId,
           name: metadata.name,
           description: metadata.description,
@@ -95,8 +94,8 @@ const CreatorDashboard = ({
 
         //define listed item object
         const tempItem: NFTtype = {
-          totalPrice,
-          price: i.price,
+          totalPrice: formatBigNumber(totalPrice),
+          price: formatBigNumber(i.price),
           itemId: i.itemId,
           name: metadata.name,
           description: metadata.description,
@@ -114,9 +113,6 @@ const CreatorDashboard = ({
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  if (!listedItems.length)
-    return <UserAnnouncement text="Theres nothing here :(" />;
-
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="w-full p-4">
@@ -132,30 +128,42 @@ const CreatorDashboard = ({
         />
 
         <Tabs
-          tabContent1={listedItems?.map((nft, idx) => {
-            return (
-              <NewNft
-                description={nft.description}
-                image={nft.image}
-                name={nft.name}
-                price={nft.price!.toString()}
-                onClick={() => {}}
-                key={`name-${idx}`}
-                collection={"This is a collection"}
-              />
-            );
-          })}
-          tabContent2={soldItems?.map((nft, idx) => (
-            <NewNft
-              description={nft.description}
-              image={nft.image}
-              name={nft.name}
-              price={nft.price!.toString()}
-              onClick={() => {}}
-              key={`name-${idx}`}
-              collection={"This is a collection"}
-            />
-          ))}
+          tabContent1={
+            listedItems.length ? (
+              listedItems.map((nft, idx) => {
+                return (
+                  <NewNft
+                    description={nft.description}
+                    image={nft.image}
+                    name={nft.name}
+                    price={nft.price!.toString()}
+                    onClick={() => {}}
+                    key={`name-${idx}`}
+                    collection={"This is a collection"}
+                  />
+                );
+              })
+            ) : (
+              <UserAnnouncement text="Theres nothing here :(" />
+            )
+          }
+          tabContent2={
+            soldItems.length ? (
+              soldItems.map((nft, idx) => (
+                <NewNft
+                  description={nft.description}
+                  image={nft.image}
+                  name={nft.name}
+                  price={nft.price!.toString()}
+                  onClick={() => {}}
+                  key={`name-${idx}`}
+                  collection={"This is a collection"}
+                />
+              ))
+            ) : (
+              <UserAnnouncement text="Theres nothing here :(" />
+            )
+          }
         />
       </div>
     </div>

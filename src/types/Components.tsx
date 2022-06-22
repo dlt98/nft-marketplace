@@ -6,6 +6,7 @@ export interface NavItemType {
   url: string;
   icon: string;
   onClick?: (text: string) => void;
+  profile?: boolean;
 }
 
 export interface SidebarProps {
