@@ -1,19 +1,16 @@
 import { ButtonProps } from "../../types";
 
-const Button = ({ text, onClick }: ButtonProps) => {
-  return (
-    <div className="flex justify-center space-x-2">
-      <button
-        onClick={onClick}
-        type="button"
-        data-mdb-ripple="true"
-        data-mdb-ripple-color="light"
-        className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-      >
-        {text}
-      </button>
-    </div>
-  );
-};
+const Button = ({ text, onClick = () => {}, href = "#" }: ButtonProps) => (
+  <a
+    onClick={onClick}
+    href={href}
+    type="button"
+    data-mdb-ripple="true"
+    data-mdb-ripple-color="light"
+    className="inline-block py-3 mr-2 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-blue-600 rounded shadow-md px-7 hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
+  >
+    {text}
+  </a>
+);
 
 export default Button;
