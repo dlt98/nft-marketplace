@@ -71,7 +71,8 @@ export interface CopyProps {
 
 export interface ButtonProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
+  href?: string;
 }
 
 interface Input {
