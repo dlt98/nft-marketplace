@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NFTtype, PageProps } from "../../types";
-import { formatBigNumber } from "../../utils";
-import { Spinner, UserAnnouncement, NewNft, NftContainer } from "../common";
+import { formatBigNumber, smoothScroll } from "../../utils";
+import {
+  Spinner,
+  UserAnnouncement,
+  NewNft,
+  NftContainer,
+  Button,
+} from "../common";
 
 const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<NFTtype[]>([]);
+
+  const marketRef = useRef<null | HTMLDivElement>(null);
 
   const loadMarketplaceItems = async () => {
     const itemCount: number = await marketplace.itemCount();
@@ -57,19 +65,31 @@ const Home = ({ nft, marketplace }: PageProps) => {
 
   return (
     <div className="w-full px-4">
-      <NftContainer>
-        {items.map((nft, idx) => (
-          <NewNft
-            name={nft.name}
-            description={nft.description}
-            image={nft.image}
-            price={formatBigNumber(nft.totalPrice)}
-            onClick={() => buyMarketItems(nft)}
-            collection={"Special collection"}
-            key={idx}
-          />
-        ))}
-      </NftContainer>
+      <div className="px-6 py-24 text-center text-gray-800 bg-gray-50">
+        <h1 className="mb-12 text-5xl font-bold tracking-tight md:text-6xl xl:text-7xl">
+          The best place to come <br />
+          <span className="text-blue-600">for your NFT needs</span>
+        </h1>
+        <Button
+          text="Go to the marketplace"
+          onClick={() => smoothScroll(marketRef)}
+        />
+      </div>
+      <div ref={marketRef}>
+        <NftContainer>
+          {items.map((nft, idx) => (
+            <NewNft
+              name={nft.name}
+              description={nft.description}
+              image={nft.image}
+              price={formatBigNumber(nft.totalPrice)}
+              onClick={() => buyMarketItems(nft)}
+              collection={"Special collection"}
+              key={idx}
+            />
+          ))}
+        </NftContainer>
+      </div>
     </div>
   );
 };

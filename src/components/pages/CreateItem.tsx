@@ -129,7 +129,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
         data-mdb-ripple="true"
         data-mdb-ripple-color="light"
       >
-        Primary
+        Mint NFT
       </button>
     </div>
   );

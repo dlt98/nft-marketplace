@@ -14,3 +14,13 @@ export const getProfileImage = async (
     setProfileImage(res.url);
   } catch (error) {}
 };
+
+export const smoothScroll = (
+  ref: React.MutableRefObject<HTMLDivElement | null>
+) => {
+  if (ref?.current)
+    ref.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+};
