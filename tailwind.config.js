@@ -1,8 +1,18 @@
 module.exports = {
   mode: "jit",
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        robotoMono: ["Roboto Mono", "monospace"],
+        monsterrat: ["Montserrat", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("tw-elements/dist/plugin")],
 };

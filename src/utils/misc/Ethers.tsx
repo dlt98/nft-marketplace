@@ -5,3 +5,15 @@ export const formatBigNumber = (bigNumber: BigNumberish): string =>
 
 export const formatToEth = (price: string): BigNumber =>
   ethers.utils.parseEther(price.toString());
+
+export const sliceAddress = (address: string) => {
+  if (!address) return;
+
+  const firstXCharacters = 5;
+  const lastXCharacters = 4;
+
+  return `${address.slice(0, firstXCharacters)}...${address.slice(
+    address.length - lastXCharacters,
+    address.length
+  )}`;
+};

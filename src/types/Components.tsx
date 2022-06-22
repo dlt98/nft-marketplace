@@ -1,18 +1,21 @@
 import { BigNumberish } from "ethers";
+import { ActionMeta, SingleValue } from "react-select";
 
 export interface NavItemType {
   title: string;
   url: string;
   icon: string;
-  onClick?: (tex: string) => void;
+  onClick?: (text: string) => void;
+  profile?: boolean;
 }
 
 export interface SidebarProps {
   walletAddress: string | null;
+  profileImage: string;
 }
 
 export interface SpinnerProps {
-  label: string;
+  label?: string;
 }
 
 export interface NFTProps {
@@ -25,4 +28,48 @@ export interface NFTProps {
 
 export interface UserAnnouncementProps {
   text: string;
+}
+
+export interface HeadlineProps {
+  text: string;
+  description: string;
+}
+
+export interface UserProfileSectionProps {
+  profileImage: string;
+  account: string;
+  profileChoice: string;
+  setProfileChoice: (
+    newValue: SingleValue<string>,
+    actionMeta: ActionMeta<string>
+  ) => void;
+}
+
+export interface SelectProps {
+  options: any;
+  value: string;
+  onChange: (
+    newValue: SingleValue<string>,
+    actionMeta: ActionMeta<string>
+  ) => void;
+}
+export interface SelectProps {
+  options: any;
+  value: string;
+  onChange: (
+    newValue: SingleValue<string>,
+    actionMeta: ActionMeta<string>
+  ) => void;
+}
+
+export interface CopyProps {
+  text: string;
+  className: string;
+  children: any;
+  textRef: any;
+}
+
+export interface ButtonProps {
+  text: string;
+  onClick: () => void;
 }

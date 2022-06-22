@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
-import { Spinner, UserAnnouncement, NFT } from "../common";
+import { Spinner, UserAnnouncement, Headline, NewNft } from "../common";
+import { UserProfileSection, Tabs } from "../CreatorDashboardComponents/";
+import { formatBigNumber } from "../../utils";
 
 const CreatorDashboard = ({
   marketplace,
   nft,
   account,
+  profileImage,
+  profileChoice,
+  setProfileChoice,
 }: CreatorDashboardProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [listedItems, setListedItems] = useState<NFTtype[]>([]);
@@ -58,8 +63,8 @@ const CreatorDashboard = ({
 
         //define listed item object
         const tempItem: NFTtype = {
-          totalPrice,
-          price: i.price,
+          totalPrice: formatBigNumber(totalPrice),
+          price: formatBigNumber(i.price),
           itemId: i.itemId,
           name: metadata.name,
           description: metadata.description,
@@ -89,8 +94,8 @@ const CreatorDashboard = ({
 
         //define listed item object
         const tempItem: NFTtype = {
-          totalPrice,
-          price: i.price,
+          totalPrice: formatBigNumber(totalPrice),
+          price: formatBigNumber(i.price),
           itemId: i.itemId,
           name: metadata.name,
           description: metadata.description,
@@ -108,42 +113,58 @@ const CreatorDashboard = ({
 
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
-  if (!listedItems.length)
-    return <UserAnnouncement text="Theres nothing here :(" />;
-
   return (
-    <div className="flex flex-col justify-center">
-      <div className="p-4">
-        <h3>Listed items</h3>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {listedItems.map((nft, idx) => {
-            return (
-              <NFT
-                description={nft.description}
-                image={nft.image}
-                name={nft.name}
-                price={nft.price!}
-                onClick={() => {}}
-                key={`name-${idx}`}
-              />
-            );
-          })}
-        </div>
-      </div>
-      <div className="p-4">
-        <h3>Sold items</h3>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {soldItems?.map((nft, idx) => (
-            <NFT
-              description={nft.description}
-              image={nft.image}
-              name={nft.name}
-              price={nft.price!}
-              onClick={() => {}}
-              key={`name-${idx}`}
-            />
-          ))}
-        </div>
+    <div className="flex flex-col items-center justify-center">
+      <div className="w-full p-4">
+        <Headline
+          text="Creator dashboard"
+          description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
+        />
+        <UserProfileSection
+          account={account}
+          profileChoice={profileChoice}
+          profileImage={profileImage}
+          setProfileChoice={setProfileChoice}
+        />
+
+        <Tabs
+          tabContent1={
+            listedItems.length ? (
+              listedItems.map((nft, idx) => {
+                return (
+                  <NewNft
+                    description={nft.description}
+                    image={nft.image}
+                    name={nft.name}
+                    price={nft.price!.toString()}
+                    onClick={() => {}}
+                    key={`name-${idx}`}
+                    collection={"This is a collection"}
+                  />
+                );
+              })
+            ) : (
+              <UserAnnouncement text="Theres nothing here :(" />
+            )
+          }
+          tabContent2={
+            soldItems.length ? (
+              soldItems.map((nft, idx) => (
+                <NewNft
+                  description={nft.description}
+                  image={nft.image}
+                  name={nft.name}
+                  price={nft.price!.toString()}
+                  onClick={() => {}}
+                  key={`name-${idx}`}
+                  collection={"This is a collection"}
+                />
+              ))
+            ) : (
+              <UserAnnouncement text="Theres nothing here :(" />
+            )
+          }
+        />
       </div>
     </div>
   );

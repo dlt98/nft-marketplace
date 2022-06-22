@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { MyListedItemsProps, NFTtype } from "../../types";
 import { Spinner, UserAnnouncement } from "../common";
 import { formatBigNumber, formatToEth } from "../../utils";
-import { ethers } from "ethers";
 
 const MyListedItems = ({ marketplace, nft, account }: MyListedItemsProps) => {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,0 +1,4 @@
+.nft-display,
+.active.nft-display {
+  @apply flex gap-4;
+}
