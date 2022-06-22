@@ -4,7 +4,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { IPFS_BASE_URL, IPFS_CONNECTION_URL } from "../../utils";
 import { PageProps } from "../../types";
 import { FileInput, Input, TextArea } from "../CreateItem";
-import { Label } from "../common";
+import { Label, Headline } from "../common";
 
 const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 
@@ -32,7 +32,6 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
   };
 
   const createNFT = async () => {
-    console.log("THis");
     if (!image || !price || !name || !description) return;
 
     try {
@@ -65,11 +64,13 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
     await (await marketplace.makeItem(nft.address, id, listingPrice)).wait();
   };
 
-  console.log("checkIfAllInputsFilled", checkIfAllInputsFilled());
-
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-1/2 pb-12">
+        <Headline
+          description="This is the page that allows you to create your very own NFT. Fill out the required fields and confirm the transaction in your metamask wallet, and voila!"
+          text="Create New Item"
+        />
         <h4 className="mb-5 text-sm text-gray-500 font-poppins">
           <span className="mr-1 text-red-600">*</span>
           Required fields
