@@ -89,3 +89,8 @@ export interface FileInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
   image: string | null;
 }
+export interface LabelProps {
+  title: string;
+  description: string;
+  required?: boolean;
+}

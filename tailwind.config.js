@@ -11,6 +11,7 @@ module.exports = {
         robotoMono: ["Roboto Mono", "monospace"],
         monsterrat: ["Montserrat", "sans-serif"],
         inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },

@@ -6,6 +6,7 @@ import SelectComponent from "./SelectComponent";
 import Copy from "./Copy";
 import NewNft from "./NewNft";
 import Button from "./Button";
+import Label from "./Label";
 
 export {
   Spinner,
@@ -16,4 +17,5 @@ export {
   Copy,
   NewNft,
   Button,
+  Label,
 };
