@@ -60,20 +60,18 @@ const Home = ({ nft, marketplace }: PageProps) => {
   if (!items.length) return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
-    <div className="flex justify-center">
-      <div className="px-4" style={{ maxWidth: "1600px" }}>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((nft, idx) => (
-            <NFT
-              name={nft.name}
-              description={nft.description}
-              image={nft.image}
-              price={nft.totalPrice}
-              onClick={() => buyMarketItems(nft)}
-              key={idx}
-            />
-          ))}
-        </div>
+    <div className="px-4" style={{ maxWidth: "1600px" }}>
+      <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+        {items.map((nft, idx) => (
+          <NFT
+            name={nft.name}
+            description={nft.description}
+            image={nft.image}
+            price={nft.totalPrice}
+            onClick={() => buyMarketItems(nft)}
+            key={idx}
+          />
+        ))}
       </div>
     </div>
   );

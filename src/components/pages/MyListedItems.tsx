@@ -57,33 +57,26 @@ const MyListedItems = ({ marketplace, nft, account }: MyListedItemsProps) => {
     return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
-    <div>
-      <div className="p-4">
-        <h2 className="py-2 text-2xl">Items bought</h2>
-        <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-          {purchases.map((nft, idx) => {
-            console.log("nft", nft);
-
-            return (
-              <div
-                className="overflow-hidden border shadow rounded-xl"
-                key={idx}
-              >
-                <img
-                  src={nft.image}
-                  alt={`nft-${nft.name}`}
-                  className="rounded"
-                />
-                <div className="p-4 bg-black">
-                  <p className="text-2xl font-bold text-white">
-                    Price - {formatBigNumber(nft.price!)} Eth
-                  </p>
-                </div>
-                <button onClick={() => sellNFT(nft)}>SELL ITEM</button>
+    <div className="p-4">
+      <h2 className="py-2 text-2xl">Items bought</h2>
+      <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+        {purchases.map((nft, idx) => {
+          return (
+            <div className="overflow-hidden border shadow rounded-xl" key={idx}>
+              <img
+                src={nft.image}
+                alt={`nft-${nft.name}`}
+                className="rounded"
+              />
+              <div className="p-4 bg-black">
+                <p className="text-2xl font-bold text-white">
+                  Price - {formatBigNumber(nft.price!)} Eth
+                </p>
               </div>
-            );
-          })}
-        </div>
+              <button onClick={() => sellNFT(nft)}>SELL ITEM</button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

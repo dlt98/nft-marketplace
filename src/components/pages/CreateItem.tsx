@@ -65,79 +65,75 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col w-1/2 pb-12">
-        <Headline
-          description="This is the page that allows you to create your very own NFT. Fill out the required fields and confirm the transaction in your metamask wallet, and voila!"
-          text="Create New Item"
+    <div className="flex flex-col w-1/2">
+      <Headline
+        description="This is the page that allows you to create your very own NFT. Fill out the required fields and confirm the transaction in your metamask wallet, and voila!"
+        text="Create New Item"
+      />
+      <h4 className="mb-5 text-sm text-gray-500 font-poppins">
+        <span className="mr-1 text-red-600">*</span>
+        Required fields
+      </h4>
+      <>
+        <Label
+          title="Image, Video, Audio, or 3D Model"
+          description="File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB"
+          required
         />
-        <h4 className="mb-5 text-sm text-gray-500 font-poppins">
-          <span className="mr-1 text-red-600">*</span>
-          Required fields
-        </h4>
-        <>
-          <Label
-            title="Image, Video, Audio, or 3D Model"
-            description="File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB"
-            required
-          />
-          <FileInput onChange={uploadToIpfs} image={image} />
-        </>
-        <>
-          <Label
-            title="Name"
-            description="This is the name of your NFT"
-            required
-          />
-          <Input
-            name="Asset name"
-            onChange={(e) => setName(e.target.value.trim())}
-            placeholder="Asset name"
-            type="text"
-          />
-        </>
-        <>
-          <Label
-            title="Description"
-            description="The description will be included on the item's card view."
-            required
-          />
-          <TextArea
-            placeholder="Provide a detailed description of your item."
-            onChange={(e) => setDescription(e.target.value.trim())}
-            name="Description"
-            type="text"
-          />
-        </>
-        <>
-          <Label
-            title="Price"
-            description="The amount users you ask for your NFT, the currency is ETH"
-            required
-          />
-          <Input
-            name="Asset price"
-            onChange={(e) => {
-              const value = parseFloat(e.target.value.trim());
-              setPrice(isNaN(value) ? "" : value.toString());
-            }}
-            placeholder="Asset price"
-            type="number"
-          />
-        </>
+        <FileInput onChange={uploadToIpfs} image={image} />
+      </>
+      <>
+        <Label
+          title="Name"
+          description="This is the name of your NFT"
+          required
+        />
+        <Input
+          name="Asset name"
+          onChange={(e) => setName(e.target.value.trim())}
+          placeholder="Asset name"
+          type="text"
+        />
+      </>
+      <>
+        <Label
+          title="Description"
+          description="The description will be included on the item's card view."
+          required
+        />
+        <TextArea
+          placeholder="Provide a detailed description of your item."
+          onChange={(e) => setDescription(e.target.value.trim())}
+          name="Description"
+          type="text"
+        />
+      </>
+      <>
+        <Label
+          title="Price"
+          description="The amount users you ask for your NFT, the currency is ETH"
+          required
+        />
+        <Input
+          name="Asset price"
+          onChange={(e) => {
+            const value = parseFloat(e.target.value.trim());
+            setPrice(isNaN(value) ? "" : value.toString());
+          }}
+          placeholder="Asset price"
+          type="number"
+        />
+      </>
 
-        <button
-          type="button"
-          onClick={createNFT}
-          className={
-            checkIfAllInputsFilled() ? "activated-btn" : "disabled-btn"
-          }
-          data-mdb-ripple="true"
-          data-mdb-ripple-color="light"
-        >
-          Primary
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={createNFT}
+        className={checkIfAllInputsFilled() ? "activated-btn" : "disabled-btn"}
+        data-mdb-ripple="true"
+        data-mdb-ripple-color="light"
+      >
+        Primary
+      </button>
     </div>
   );
 };
