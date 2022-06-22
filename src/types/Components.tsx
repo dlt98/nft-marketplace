@@ -73,3 +73,9 @@ export interface ButtonProps {
   text: string;
   onClick: () => void;
 }
+
+export interface FileInputProps {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  placeholder: string;
+  image: string | null;
+}
