@@ -73,3 +73,24 @@ export interface ButtonProps {
   text: string;
   onClick: () => void;
 }
+
+interface Input {
+  placeholder: string;
+  type: string;
+  onChange: (e: any) => void;
+  name: string;
+}
+
+export interface InputProps extends Input {}
+export interface TextAreaProps extends Input {
+  rows?: number;
+}
+export interface FileInputProps {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  image: string | null;
+}
+export interface LabelProps {
+  title: string;
+  description: string;
+  required?: boolean;
+}

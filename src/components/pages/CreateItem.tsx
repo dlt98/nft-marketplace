@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { IPFS_BASE_URL, IPFS_CONNECTION_URL, PageProps } from "../../utils";
+import { IPFS_BASE_URL, IPFS_CONNECTION_URL } from "../../utils";
+import { PageProps } from "../../types";
+import { FileInput, Input, TextArea } from "../CreateItem";
+import { Label, Headline } from "../common";
 
 const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 
 const CreateItem = ({ nft, marketplace }: PageProps) => {
-  const [image, setImage] = useState<null | string>(null);
-  const [price, setPrice] = useState<null | string>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const [price, setPrice] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
@@ -62,40 +65,71 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col w-1/2 pb-12">
-        <input
-          type="text"
-          placeholder="Asset name"
-          className="p-4 mt-8 border rounded"
+    <div className="flex flex-col w-1/2">
+      <h4 className="mb-5 text-sm text-gray-500 font-poppins">
+        <span className="mr-1 text-red-600">*</span>
+        Required fields
+      </h4>
+      <>
+        <Label
+          title="Image, Video, Audio, or 3D Model"
+          description="File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB"
+          required
+        />
+        <FileInput onChange={uploadToIpfs} image={image} />
+      </>
+      <>
+        <Label
+          title="Name"
+          description="This is the name of your NFT"
+          required
+        />
+        <Input
+          name="Asset name"
           onChange={(e) => setName(e.target.value.trim())}
-        />
-        <textarea
-          placeholder="Asset description"
-          className="p-4 mt-2 border rounded"
-          onChange={(e) => setDescription(e.target.value.trim())}
-        />
-        <input
+          placeholder="Asset name"
           type="text"
-          placeholder="Asset price in Ethereum"
-          className="p-4 mt-2 border rounded"
-          onChange={(e) => setPrice(e.target.value.trim())}
         />
-        <input
-          type="file"
-          placeholder="Asset"
-          className="my-4"
-          onChange={uploadToIpfs}
+      </>
+      <>
+        <Label
+          title="Description"
+          description="The description will be included on the item's card view."
+          required
         />
-        {image && <img className="mt-4 rounded" src={image} />}
-        <button
-          disabled={!checkIfAllInputsFilled()}
-          className="p-4 mt-4 font-bold text-white bg-pink-500 rounded shadow-lg"
-          onClick={createNFT}
-        >
-          Create Digital Asset
-        </button>
-      </div>
+        <TextArea
+          placeholder="Provide a detailed description of your item."
+          onChange={(e) => setDescription(e.target.value.trim())}
+          name="Description"
+          type="text"
+        />
+      </>
+      <>
+        <Label
+          title="Price"
+          description="The amount users you ask for your NFT, the currency is ETH"
+          required
+        />
+        <Input
+          name="Asset price"
+          onChange={(e) => {
+            const value = parseFloat(e.target.value.trim());
+            setPrice(isNaN(value) ? "" : value.toString());
+          }}
+          placeholder="Asset price"
+          type="number"
+        />
+      </>
+
+      <button
+        type="button"
+        onClick={createNFT}
+        className={checkIfAllInputsFilled() ? "activated-btn" : "disabled-btn"}
+        data-mdb-ripple="true"
+        data-mdb-ripple-color="light"
+      >
+        Primary
+      </button>
     </div>
   );
 };

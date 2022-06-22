@@ -114,42 +114,19 @@ const CreatorDashboard = ({
   if (isLoading) return <Spinner label="Loading marketplace items..." />;
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="w-full p-4">
-        <Headline
-          text="Creator dashboard"
-          description="Here you can view your listed and sold items, along with setting up some options to customize your experience"
-        />
-        <UserProfileSection
-          account={account}
-          profileChoice={profileChoice}
-          profileImage={profileImage}
-          setProfileChoice={setProfileChoice}
-        />
+    <div className="w-full p-4">
+      <UserProfileSection
+        account={account}
+        profileChoice={profileChoice}
+        profileImage={profileImage}
+        setProfileChoice={setProfileChoice}
+      />
 
-        <Tabs
-          tabContent1={
-            listedItems.length ? (
-              listedItems.map((nft, idx) => {
-                return (
-                  <NewNft
-                    description={nft.description}
-                    image={nft.image}
-                    name={nft.name}
-                    price={nft.price!.toString()}
-                    onClick={() => {}}
-                    key={`name-${idx}`}
-                    collection={"This is a collection"}
-                  />
-                );
-              })
-            ) : (
-              <UserAnnouncement text="Theres nothing here :(" />
-            )
-          }
-          tabContent2={
-            soldItems.length ? (
-              soldItems.map((nft, idx) => (
+      <Tabs
+        tabContent1={
+          listedItems.length ? (
+            listedItems.map((nft, idx) => {
+              return (
                 <NewNft
                   description={nft.description}
                   image={nft.image}
@@ -159,13 +136,30 @@ const CreatorDashboard = ({
                   key={`name-${idx}`}
                   collection={"This is a collection"}
                 />
-              ))
-            ) : (
-              <UserAnnouncement text="Theres nothing here :(" />
-            )
-          }
-        />
-      </div>
+              );
+            })
+          ) : (
+            <UserAnnouncement text="Theres nothing here :(" />
+          )
+        }
+        tabContent2={
+          soldItems.length ? (
+            soldItems.map((nft, idx) => (
+              <NewNft
+                description={nft.description}
+                image={nft.image}
+                name={nft.name}
+                price={nft.price!.toString()}
+                onClick={() => {}}
+                key={`name-${idx}`}
+                collection={"This is a collection"}
+              />
+            ))
+          ) : (
+            <UserAnnouncement text="Theres nothing here :(" />
+          )
+        }
+      />
     </div>
   );
 };

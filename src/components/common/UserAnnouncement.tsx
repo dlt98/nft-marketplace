@@ -1,4 +1,4 @@
-import { UserAnnouncementProps } from "../../utils";
+import { UserAnnouncementProps } from "../../types";
 
 const UserAnnouncement = ({ text }: UserAnnouncementProps) => {
   return (

@@ -1,6 +1,6 @@
 import Home from "./Home";
 import CreateItem from "./CreateItem";
 import CreatorDashboard from "./CreatorDashboard";
-import MyListedItems from "./MyListedItems";
+import MyAssets from "./MyAssets";
 
-export { Home, CreateItem, CreatorDashboard, MyListedItems };
+export { Home, CreateItem, CreatorDashboard, MyAssets };

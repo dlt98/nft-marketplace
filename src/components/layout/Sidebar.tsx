@@ -1,5 +1,6 @@
 import NavItem from "./NavItem";
-import { NAV_ITEMS, SidebarProps, copyToClipboard } from "../../utils";
+import { NAV_ITEMS, copyToClipboard } from "../../utils";
+import { SidebarProps } from "../../types";
 import "../../styles/navigation.css";
 
 const Sidebar = ({ walletAddress, profileImage }: SidebarProps) => {
