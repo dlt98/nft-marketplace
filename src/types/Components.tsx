@@ -74,6 +74,15 @@ export interface ButtonProps {
   onClick: () => void;
 }
 
+interface Input {
+  placeholder: string;
+  type: string;
+  onChange: (e: any) => void;
+  name: string;
+}
+export interface TextAreaProps extends Input {
+  rows?: number;
+}
 export interface FileInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
   placeholder: string;
