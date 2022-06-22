@@ -17,10 +17,11 @@ import { Spinner } from "./components/common";
 import {
   upperCaseAndSpace,
   saveToStorage,
-  UserSettings,
   getSpecificSettingsFromStorage,
   getProfileImage,
 } from "./utils";
+
+import { UserSettings } from "./types";
 
 const defaultProfileChoiceValue = {
   value: PROFILE_OPTIONS[3],

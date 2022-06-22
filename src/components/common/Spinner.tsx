@@ -1,5 +1,5 @@
 import "../../styles/spinner.css";
-import { SpinnerProps } from "../../utils";
+import { SpinnerProps } from "../../types";
 
 const Spinner = ({ label }: SpinnerProps) => (
   <div className="flex items-center justify-center w-full h-full">

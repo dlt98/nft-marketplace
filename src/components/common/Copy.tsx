@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { copyToClipboard } from "../../utils";
-import { CopyProps } from "../../utils";
+import { CopyProps } from "../../types";
 
 const Copy = ({ text, className, textRef, children }: CopyProps) => {
   const changeRefText = () => {

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NavItemType } from "../../utils";
+import { NavItemType } from "../../types";
 
 const NavItem = ({
   url,

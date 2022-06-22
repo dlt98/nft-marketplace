@@ -1,4 +1,4 @@
-import { NavItemType } from "../index";
+import { NavItemType } from "../../types";
 import {
   dashboard,
   home,
