@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NFTtype, PageProps } from "../../types";
-import { Spinner, NFT, UserAnnouncement } from "../common";
+import { formatBigNumber } from "../../utils";
+import { Spinner, UserAnnouncement, NewNft, NftContainer } from "../common";
 
 const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,12 +18,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
         const uri = await nft.tokenURI(item.tokenId);
 
         //use uri to fetch the nft metadata store on ipfs
-        const res = await fetch(uri, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(uri);
 
         const metadata = await res.json();
         //get total price of item (item price + fee)
@@ -60,19 +56,20 @@ const Home = ({ nft, marketplace }: PageProps) => {
   if (!items.length) return <UserAnnouncement text="Theres nothing here :(" />;
 
   return (
-    <div className="px-4" style={{ maxWidth: "1600px" }}>
-      <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="w-full px-4">
+      <NftContainer>
         {items.map((nft, idx) => (
-          <NFT
+          <NewNft
             name={nft.name}
             description={nft.description}
             image={nft.image}
-            price={nft.totalPrice}
+            price={formatBigNumber(nft.totalPrice)}
             onClick={() => buyMarketItems(nft)}
+            collection={"Special collection"}
             key={idx}
           />
         ))}
-      </div>
+      </NftContainer>
     </div>
   );
 };

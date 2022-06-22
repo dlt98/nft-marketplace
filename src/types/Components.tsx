@@ -84,6 +84,7 @@ interface Input {
 export interface InputProps extends Input {}
 export interface TextAreaProps extends Input {
   rows?: number;
+  maxLength?: number;
 }
 export interface FileInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;

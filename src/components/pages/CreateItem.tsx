@@ -101,6 +101,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
           placeholder="Provide a detailed description of your item."
           onChange={(e) => setDescription(e.target.value.trim())}
           name="Description"
+          maxLength={150}
           type="text"
         />
       </>
