@@ -7,6 +7,7 @@ import {
   NewNft,
   NftContainer,
   Button,
+  Modal,
 } from "../common";
 
 const Home = ({ nft, marketplace }: PageProps) => {

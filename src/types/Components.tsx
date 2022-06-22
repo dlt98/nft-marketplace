@@ -12,6 +12,7 @@ export interface NavItemType {
 export interface SidebarProps {
   walletAddress: string | null;
   profileImage: string;
+  ethPrice: number;
 }
 
 export interface SpinnerProps {

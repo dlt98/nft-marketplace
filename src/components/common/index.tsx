@@ -8,6 +8,7 @@ import NewNft from "./NewNft";
 import Button from "./Button";
 import Label from "./Label";
 import NftContainer from "./NftContainer";
+import Modal from "./Modal";
 
 export {
   Spinner,
@@ -20,4 +21,5 @@ export {
   Button,
   Label,
   NftContainer,
+  Modal,
 };
