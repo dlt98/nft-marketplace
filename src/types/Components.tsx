@@ -80,11 +80,12 @@ interface Input {
   onChange: (e: any) => void;
   name: string;
 }
+
+export interface InputProps extends Input {}
 export interface TextAreaProps extends Input {
   rows?: number;
 }
 export interface FileInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
-  placeholder: string;
   image: string | null;
 }
