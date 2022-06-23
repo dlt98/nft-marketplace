@@ -135,6 +135,7 @@ const CreatorDashboard = ({
                   onClick={() => {}}
                   key={`name-${idx}`}
                   collection={"This is a collection"}
+                  priceText="Listed price"
                 />
               );
             })
@@ -153,6 +154,7 @@ const CreatorDashboard = ({
                 onClick={() => {}}
                 key={`name-${idx}`}
                 collection={"This is a collection"}
+                priceText="Listed price"
               />
             ))
           ) : (

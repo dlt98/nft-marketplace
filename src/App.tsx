@@ -41,7 +41,6 @@ const App = () => {
   const [profileChoice, setProfileChoice] = useState<any>();
   const [ethInfo, setEthInfo] = useState<EthInfo | null>(null);
 
-  console.log("ethInfo", ethInfo);
   //Metamask get wallet address
   const connectMetamask = async () => {
     const accounts = await window.ethereum.request({

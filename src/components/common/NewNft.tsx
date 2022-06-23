@@ -7,6 +7,8 @@ interface NewNftProps {
   collection: string;
   description?: string;
   onClick: () => void;
+  priceText?: string;
+  buttonText?: string;
 }
 const NewNft = ({
   image,
@@ -15,6 +17,8 @@ const NewNft = ({
   collection = "Tester",
   description,
   onClick,
+  priceText,
+  buttonText,
 }: NewNftProps) => {
   return (
     <div className="p-1 transition-all border-2 rounded-lg hover:-translate-y-1 max-w-[300px] w-max  group hover:shadow-2xl">
@@ -45,13 +49,15 @@ const NewNft = ({
       <div className="flex items-center justify-between px-3 py-4 bg-gray-100 rounded-xl">
         <div>
           <h3 className="mb-1 text-xs font-medium text-gray-800 font-monsterrat">
-            Price
+            {priceText || "Price"}
           </h3>
           <p className="text-sm font-semibold font-inter">{price} ETH</p>
         </div>
-        <div className="transition-all origin-right scale-0 group-hover:scale-100">
-          <Button text="Buy" onClick={onClick} />
-        </div>
+        {!!buttonText && (
+          <div className="transition-all origin-right scale-0 group-hover:scale-100">
+            <Button text={buttonText} onClick={onClick} />
+          </div>
+        )}
       </div>
     </div>
   );

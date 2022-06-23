@@ -77,7 +77,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
         />
       </div>
       <div ref={marketRef}>
-        <NftContainer>
+        <NftContainer className="mt-5">
           {items.map((nft, idx) => (
             <NewNft
               name={nft.name}
@@ -86,6 +86,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
               price={formatBigNumber(nft.totalPrice)}
               onClick={() => buyMarketItems(nft)}
               collection={"Special collection"}
+              buttonText="Buy"
               key={idx}
             />
           ))}
