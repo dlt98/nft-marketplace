@@ -20,11 +20,14 @@ export interface SpinnerProps {
 }
 
 export interface NFTProps {
-  image: string;
   name: string;
-  description: string;
-  price: BigNumberish;
+  image: string;
+  price: string;
+  collection: string;
+  description?: string;
   onClick: () => void;
+  priceText?: string;
+  buttonText?: string;
 }
 
 export interface UserAnnouncementProps {

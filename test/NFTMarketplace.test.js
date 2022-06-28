@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-expect */
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
@@ -88,6 +89,7 @@ describe("NFTMarketplace", () => {
     });
   });
 
+  // eslint-disable-next-line jest/valid-describe-callback
   describe("Purchasing marketplace items", async () => {
     const price = 2;
     const fee = (feePercent / 100) * price;
@@ -171,21 +173,4 @@ describe("NFTMarketplace", () => {
       ).to.be.revertedWith("item already sold");
     });
   });
-
-  //TODO Missing test
-  // describe("Selling user items", async () => {
-  //   beforeEach(async () => {
-  //     // addr1 mints an nft
-  //     await nft.connect(addr1).mint(URI);
-
-  //     //addr1 approves marketplace to spend nft
-  //     await nft.connect(addr1).setApprovalForAll(marketplace.address, true);
-  //   });
-
-  //   it("Selling current NFT", async () => {
-  //     await expect(marketplace.connect(addr1).sellItem(1, toWei(1)))
-  //       .to.emit(marketplace, "Offered")
-  //       .withArgs(1, nft.address, 1, toWei(1), addr1.address);
-  //   });
-  // });
 });

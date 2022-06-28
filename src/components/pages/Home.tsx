@@ -4,7 +4,7 @@ import { formatBigNumber, smoothScroll } from "../../utils";
 import {
   Spinner,
   UserAnnouncement,
-  NewNft,
+  NFT,
   NftContainer,
   Button,
   Modal,
@@ -52,7 +52,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
     loadMarketplaceItems();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const buyMarketItems = async (item: any) => {
+  const buyMarketItems = async (item: NFTtype) => {
     await (
       await marketplace.purchaseItem(item.itemId, { value: item.totalPrice })
     ).wait();
@@ -78,8 +78,9 @@ const Home = ({ nft, marketplace }: PageProps) => {
       </div>
       <div ref={marketRef}>
         <NftContainer className="mt-5">
-          {items.map((nft, idx) => (
-            <NewNft
+          {items.length ? (
+            items.map((nft: NFTtype, idx) => (
+            <NFT
               name={nft.name}
               description={nft.description}
               image={nft.image}
@@ -89,7 +90,10 @@ const Home = ({ nft, marketplace }: PageProps) => {
               buttonText="Buy"
               key={idx}
             />
-          ))}
+            ))
+          ) : (
+            <UserAnnouncement text="Theres nothing here :(" />
+          )}
         </NftContainer>
       </div>
     </div>

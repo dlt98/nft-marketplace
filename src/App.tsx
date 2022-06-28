@@ -177,7 +177,7 @@ const App = () => {
             />
           </Routes>
         )}
-        <Modal name="ethModal" title="Ethereum">
+        <Modal name="ethModal" title="Ethereum information">
           <div>
             <div className="flex items-center">
               <img src={ethereumIcon} alt="ethereum icon" className="w-7 h-7" />
@@ -185,9 +185,14 @@ const App = () => {
             </div>
             <h3 className="my-4 font-poppins">
               The price of Ether is{" "}
-              <span className="font-bold">
+              <a
+                className="font-bold"
+                href="https://www.coingecko.com/en/coins/ethereum"
+                target={"_blank"}
+                rel="noreferrer"
+              >
                 {ethInfo?.market_data.current_price.usd}$
-              </span>
+              </a>
             </h3>
             <div>
               <h5>Description:</h5>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CreatorDashboardProps, NFTtype } from "../../types";
 import { BigNumberish } from "ethers";
-import { Spinner, UserAnnouncement, Headline, NewNft } from "../common";
+import { Spinner, UserAnnouncement, Headline, NFT } from "../common";
 import { UserProfileSection, Tabs } from "../CreatorDashboardComponents/";
 import { formatBigNumber } from "../../utils";
 
@@ -127,7 +127,7 @@ const CreatorDashboard = ({
           listedItems.length ? (
             listedItems.map((nft, idx) => {
               return (
-                <NewNft
+                <NFT
                   description={nft.description}
                   image={nft.image}
                   name={nft.name}
@@ -146,7 +146,7 @@ const CreatorDashboard = ({
         tabContent2={
           soldItems.length ? (
             soldItems.map((nft, idx) => (
-              <NewNft
+              <NFT
                 description={nft.description}
                 image={nft.image}
                 name={nft.name}
