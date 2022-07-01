@@ -9,6 +9,8 @@ import Label from "./Label";
 import NftContainer from "./NftContainer";
 import Modal from "./Modal";
 import Alert from "./Alert";
+import OffCanvas from "./OffCanvas";
+import WideButton from "./WideButton";
 
 export {
   Spinner,
@@ -22,4 +24,6 @@ export {
   NftContainer,
   Modal,
   Alert,
+  OffCanvas,
+  WideButton,
 };

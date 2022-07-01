@@ -4,7 +4,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { IPFS_BASE_URL, IPFS_CONNECTION_URL } from "../../utils";
 import { PageProps } from "../../types";
 import { FileInput, Input, TextArea } from "../CreateItem";
-import { Label, Headline } from "../common";
+import { Label, Headline, WideButton } from "../common";
 
 const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 
@@ -108,7 +108,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
       <>
         <Label
           title="Price"
-          description="The amount users you ask for your NFT, the currency is ETH"
+          description="The amount do you ask for your NFT, the currency is ETH"
           required
         />
         <Input
@@ -122,15 +122,11 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
         />
       </>
 
-      <button
-        type="button"
+      <WideButton
         onClick={createNFT}
-        className={checkIfAllInputsFilled() ? "activated-btn" : "disabled-btn"}
-        data-mdb-ripple="true"
-        data-mdb-ripple-color="light"
-      >
-        Mint NFT
-      </button>
+        disabled={checkIfAllInputsFilled()}
+        buttonText="Mint NFT"
+      />
     </div>
   );
 };
