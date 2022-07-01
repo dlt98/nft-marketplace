@@ -13,15 +13,17 @@ import {
 
 import { Container, Sidebar } from "./components/layout/";
 
-import { Headline, Spinner } from "./components/common";
+import { Headline, Modal, Spinner } from "./components/common";
 import {
   upperCaseAndSpace,
   saveToStorage,
   getSpecificSettingsFromStorage,
   getProfileImage,
+  getEthValues,
 } from "./utils";
 
-import { UserSettings } from "./types";
+import { UserSettings, EthInfo } from "./types";
+import { ethereumIcon } from "./images";
 
 const defaultProfileChoiceValue = {
   value: PROFILE_OPTIONS[3],
@@ -37,6 +39,7 @@ const App = () => {
   const [nft, setNft] = useState<ethers.Contract | null>(null);
   const [profileImage, setProfileImage] = useState<string>("");
   const [profileChoice, setProfileChoice] = useState<any>();
+  const [ethInfo, setEthInfo] = useState<EthInfo | null>(null);
 
   //Metamask get wallet address
   const connectMetamask = async () => {
@@ -98,11 +101,16 @@ const App = () => {
   useEffect(() => {
     connectMetamask();
     web3provider();
+    getEthValues(setEthInfo);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <BrowserRouter>
-      <Sidebar walletAddress={walletAddress} profileImage={profileImage} />
+      <Sidebar
+        walletAddress={walletAddress}
+        profileImage={profileImage}
+        ethPrice={ethInfo?.market_data.current_price.usd}
+      />
       <Container>
         {isLoading ? (
           <Spinner label="Awaiting metamask connection..." />
@@ -113,7 +121,7 @@ const App = () => {
               element={
                 <>
                   <Headline
-                    text="Home screen"
+                    text="NFT Marketplace"
                     description="This is the page where you can buy NFT's that users have created."
                   />
                   <Home marketplace={marketplace} nft={nft} />
@@ -169,6 +177,32 @@ const App = () => {
             />
           </Routes>
         )}
+        <Modal name="ethModal" title="Ethereum information">
+          <div>
+            <div className="flex items-center">
+              <img src={ethereumIcon} alt="ethereum icon" className="w-7 h-7" />
+              <p className="ml-1 text-2xl font-poppins">Ethereum</p>
+            </div>
+            <h3 className="my-4 font-poppins">
+              The price of Ether is{" "}
+              <a
+                className="font-bold"
+                href="https://www.coingecko.com/en/coins/ethereum"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                {ethInfo?.market_data.current_price.usd}$
+              </a>
+            </h3>
+            <div>
+              <h5>Description:</h5>
+              <div
+                className="font-poppins injected-html"
+                dangerouslySetInnerHTML={{ __html: ethInfo?.description.en }}
+              />
+            </div>
+          </div>
+        </Modal>
       </Container>
     </BrowserRouter>
   );

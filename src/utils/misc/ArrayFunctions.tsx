@@ -12,13 +12,15 @@ export const createSelectArray = (
   });
 };
 
-export const upperCaseAndSpace = (text: string, seperator: string = "-") =>
-  replaceWithCharacter(capitalizeFirstLetter(text), seperator);
+export const upperCaseAndSpace = (
+  text: string,
+  seperator: string = "-"
+): string => replaceWithCharacter(capitalizeFirstLetter(text), seperator);
 
-const capitalizeFirstLetter = (text: string) =>
+const capitalizeFirstLetter = (text: string): string =>
   text.charAt(0).toUpperCase() + text.slice(1);
 
-const replaceWithCharacter = (str: string, char: string) => {
+const replaceWithCharacter = (str: string, char: string): string => {
   const regex = new RegExp(char, "g");
   return str.replace(regex, " ");
 };

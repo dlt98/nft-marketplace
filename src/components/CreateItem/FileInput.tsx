@@ -6,7 +6,7 @@ const FileInput = ({ onChange, image }: FileInputProps) => {
     <div className="mb-3 w-max">
       <label htmlFor="formFileSm">
         <div
-          className="relative flex items-center justify-center p-1 transition-all border-2 border-dashed rounded-lg cursor-pointer w-72 h-72 group"
+          className="relative flex items-center justify-center p-1 transition-all border-2 border-dashed rounded-lg cursor-pointer border-slate-500 w-72 h-72 group"
           data-mdb-ripple="true"
           data-mdb-ripple-color="light"
         >

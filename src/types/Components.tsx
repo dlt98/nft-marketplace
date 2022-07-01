@@ -1,6 +1,5 @@
-import { BigNumberish } from "ethers";
 import { ActionMeta, SingleValue } from "react-select";
-
+import { SingleAlertOption } from "./ItemTypes";
 export interface NavItemType {
   title: string;
   url: string;
@@ -12,6 +11,7 @@ export interface NavItemType {
 export interface SidebarProps {
   walletAddress: string | null;
   profileImage: string;
+  ethPrice: number;
 }
 
 export interface SpinnerProps {
@@ -19,11 +19,14 @@ export interface SpinnerProps {
 }
 
 export interface NFTProps {
-  image: string;
   name: string;
-  description: string;
-  price: BigNumberish;
+  image: string;
+  price: string;
+  collection: string;
+  description?: string;
   onClick: () => void;
+  priceText?: string;
+  buttonText?: string;
 }
 
 export interface UserAnnouncementProps {
@@ -71,7 +74,8 @@ export interface CopyProps {
 
 export interface ButtonProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
+  href?: string;
 }
 
 interface Input {
@@ -84,6 +88,7 @@ interface Input {
 export interface InputProps extends Input {}
 export interface TextAreaProps extends Input {
   rows?: number;
+  maxLength?: number;
 }
 export interface FileInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
@@ -93,4 +98,19 @@ export interface LabelProps {
   title: string;
   description: string;
   required?: boolean;
+}
+
+export interface AlertProps {
+  visible: boolean;
+  setAlert: (arg0: boolean) => void;
+  alertOption: SingleAlertOption;
+  text: string;
+}
+
+export interface SingleStepProps {
+  step: number;
+  title: string;
+  text: string;
+  active: boolean;
+  onClick: () => void;
 }

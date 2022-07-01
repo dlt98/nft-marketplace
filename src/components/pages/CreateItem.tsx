@@ -66,7 +66,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
 
   return (
     <div className="flex flex-col w-1/2">
-      <h4 className="mb-5 text-sm text-gray-500 font-poppins">
+      <h4 className="mb-3 text-sm text-gray-500 font-poppins">
         <span className="mr-1 text-red-600">*</span>
         Required fields
       </h4>
@@ -101,6 +101,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
           placeholder="Provide a detailed description of your item."
           onChange={(e) => setDescription(e.target.value.trim())}
           name="Description"
+          maxLength={150}
           type="text"
         />
       </>
@@ -128,7 +129,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
         data-mdb-ripple="true"
         data-mdb-ripple-color="light"
       >
-        Primary
+        Mint NFT
       </button>
     </div>
   );
