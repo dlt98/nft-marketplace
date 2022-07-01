@@ -1,5 +1,4 @@
 import Spinner from "./Spinner";
-import NFT from "./NFT";
 import UserAnnouncement from "./UserAnnouncement";
 import Headline from "./Headline";
 import SelectComponent from "./SelectComponent";
@@ -9,10 +8,10 @@ import Button from "./Button";
 import Label from "./Label";
 import NftContainer from "./NftContainer";
 import Modal from "./Modal";
+import Alert from "./Alert";
 
 export {
   Spinner,
-  NFT,
   UserAnnouncement,
   Headline,
   SelectComponent,
@@ -22,4 +21,5 @@ export {
   Label,
   NftContainer,
   Modal,
+  Alert,
 };

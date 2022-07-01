@@ -4,4 +4,5 @@ import imageIcon from "./image-icon.png";
 import closeIcon from "./closeIcon.png";
 
 export * from "./navigation";
+export * from "./alert";
 export { copyIcon, ethereumIcon, imageIcon, closeIcon };

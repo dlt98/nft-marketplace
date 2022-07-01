@@ -1,6 +1,5 @@
-import { BigNumberish } from "ethers";
 import { ActionMeta, SingleValue } from "react-select";
-
+import { SingleAlertOption } from "./ItemTypes";
 export interface NavItemType {
   title: string;
   url: string;
@@ -99,4 +98,11 @@ export interface LabelProps {
   title: string;
   description: string;
   required?: boolean;
+}
+
+export interface AlertProps {
+  visible: boolean;
+  setAlert: (arg0: boolean) => void;
+  alertOption: SingleAlertOption;
+  text: string;
 }

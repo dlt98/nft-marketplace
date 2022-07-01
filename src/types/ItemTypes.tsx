@@ -20,3 +20,10 @@ export interface EthInfo {
   market_data: any;
   name: any;
 }
+
+export interface SingleAlertOption {
+  state: string;
+  iconTitle: string;
+  icon: string;
+  className: string;
+}
