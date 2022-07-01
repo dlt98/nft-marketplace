@@ -106,3 +106,11 @@ export interface AlertProps {
   alertOption: SingleAlertOption;
   text: string;
 }
+
+export interface SingleStepProps {
+  step: number;
+  title: string;
+  text: string;
+  active: boolean;
+  onClick: () => void;
+}

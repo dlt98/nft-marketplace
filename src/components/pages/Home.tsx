@@ -10,6 +10,7 @@ import {
   Alert,
 } from "../common";
 import { ALERT_OPTIONS } from "../../utils";
+import { Steppers } from "../HomeComponents";
 
 const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
