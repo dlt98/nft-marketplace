@@ -10,7 +10,6 @@ import {
   Alert,
 } from "../common";
 import { ALERT_OPTIONS } from "../../utils";
-import { Steppers } from "../HomeComponents";
 
 const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -115,7 +114,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
       </div>
       <Alert
         visible={alert.visible}
-        setAlert={(bool) => setAlert({ ...alert, visible: bool })}
+        setAlert={(bool: boolean) => setAlert({ ...alert, visible: bool })}
         alertOption={alert.option}
         text={alert.text}
       />

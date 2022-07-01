@@ -27,3 +27,9 @@ export interface SingleAlertOption {
   icon: string;
   className: string;
 }
+
+export interface AlertState {
+  visible: boolean;
+  option: SingleAlertOption;
+  text: string;
+}

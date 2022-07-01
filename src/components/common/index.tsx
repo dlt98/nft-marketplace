@@ -11,6 +11,7 @@ import Modal from "./Modal";
 import Alert from "./Alert";
 import OffCanvas from "./OffCanvas";
 import WideButton from "./WideButton";
+import Input from "./Input";
 
 export {
   Spinner,
@@ -26,4 +27,5 @@ export {
   Alert,
   OffCanvas,
   WideButton,
+  Input,
 };

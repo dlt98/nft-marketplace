@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { IPFS_BASE_URL, IPFS_CONNECTION_URL } from "../../utils";
-import { PageProps } from "../../types";
-import { FileInput, Input, TextArea } from "../CreateItem";
-import { Label, Headline, WideButton } from "../common";
+import { IPFS_BASE_URL, IPFS_CONNECTION_URL, ALERT_OPTIONS } from "../../utils";
+import { AlertState, PageProps } from "../../types";
+import { FileInput, TextArea } from "../CreateItem";
+import { Label, Input, WideButton, Alert } from "../common";
 
 const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 
@@ -13,6 +13,11 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
   const [price, setPrice] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [alert, setAlert] = useState<AlertState>({
+    visible: false,
+    option: ALERT_OPTIONS[0],
+    text: "You just sold your NFT, check the home page to see it listed",
+  });
 
   const checkIfAllInputsFilled = (): boolean =>
     !!image && !!price && !!name && !!description;
@@ -86,7 +91,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
         />
         <Input
           name="Asset name"
-          onChange={(e) => setName(e.target.value.trim())}
+          onChange={(e: any) => setName(e.target.value.trim())}
           placeholder="Asset name"
           type="text"
         />
@@ -113,7 +118,7 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
         />
         <Input
           name="Asset price"
-          onChange={(e) => {
+          onChange={(e: any) => {
             const value = parseFloat(e.target.value.trim());
             setPrice(isNaN(value) ? "" : value.toString());
           }}
@@ -126,6 +131,12 @@ const CreateItem = ({ nft, marketplace }: PageProps) => {
         onClick={createNFT}
         disabled={checkIfAllInputsFilled()}
         buttonText="Mint NFT"
+      />
+      <Alert
+        visible={alert.visible}
+        setAlert={(bool: boolean) => setAlert({ ...alert, visible: bool })}
+        alertOption={alert.option}
+        text={alert.text}
       />
     </div>
   );
