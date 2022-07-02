@@ -17,6 +17,7 @@ import {
   formatToEth,
   getAlertOption,
 } from "../../utils";
+import SortButton from "../common/SortButton";
 
 const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -86,6 +87,7 @@ const MyAssets = ({ marketplace, nft, account }: MyAssetsProps) => {
 
   return (
     <div className="p-4">
+      <SortButton nfts={purchases} setNfts={setPurchases} />
       <h2 className="py-2 text-2xl">Items bought</h2>
       {purchases.length ? (
         <NftContainer>

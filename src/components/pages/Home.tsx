@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { NFTtype, PageProps } from "../../types";
-import { formatBigNumber, smoothScroll, getAlertOption } from "../../utils";
+import {
+  formatBigNumber,
+  smoothScroll,
+  getAlertOption,
+  ALERT_OPTIONS,
+} from "../../utils";
 import {
   Spinner,
   UserAnnouncement,
@@ -8,8 +13,8 @@ import {
   NftContainer,
   Button,
   Alert,
+  SortButton,
 } from "../common";
-import { ALERT_OPTIONS } from "../../utils";
 
 const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +63,10 @@ const Home = ({ nft, marketplace }: PageProps) => {
     loadMarketplaceItems();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    console.log("items", items);
+  }, [items]);
+
   const buyMarketItems = async (item: NFTtype) => {
     await (
       await marketplace.purchaseItem(item.itemId, { value: item.totalPrice })
@@ -93,6 +102,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
         />
       </div>
       <div ref={marketRef}>
+        <SortButton nfts={items} setNfts={setItems} />
         <NftContainer className="mt-5">
           {items.length ? (
             items.map((nft: NFTtype, idx) => (

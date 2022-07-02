@@ -12,6 +12,7 @@ import Alert from "./Alert";
 import OffCanvas from "./OffCanvas";
 import WideButton from "./WideButton";
 import Input from "./Input";
+import SortButton from "./SortButton";
 
 export {
   Spinner,
@@ -28,4 +29,5 @@ export {
   OffCanvas,
   WideButton,
   Input,
+  SortButton,
 };
