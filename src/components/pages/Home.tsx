@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { NFTtype, PageProps } from "../../types";
-import { formatBigNumber, smoothScroll, getAlertOption } from "../../utils";
+import {
+  formatBigNumber,
+  smoothScroll,
+  getAlertOption,
+  ALERT_OPTIONS,
+} from "../../utils";
 import {
   Spinner,
   UserAnnouncement,
@@ -8,9 +13,8 @@ import {
   NftContainer,
   Button,
   Alert,
+  SortButton,
 } from "../common";
-import { ALERT_OPTIONS } from "../../utils";
-import { Steppers } from "../HomeComponents";
 
 const Home = ({ nft, marketplace }: PageProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +63,10 @@ const Home = ({ nft, marketplace }: PageProps) => {
     loadMarketplaceItems();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    console.log("items", items);
+  }, [items]);
+
   const buyMarketItems = async (item: NFTtype) => {
     await (
       await marketplace.purchaseItem(item.itemId, { value: item.totalPrice })
@@ -94,6 +102,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
         />
       </div>
       <div ref={marketRef}>
+        <SortButton nfts={items} setNfts={setItems} />
         <NftContainer className="mt-5">
           {items.length ? (
             items.map((nft: NFTtype, idx) => (
@@ -115,7 +124,7 @@ const Home = ({ nft, marketplace }: PageProps) => {
       </div>
       <Alert
         visible={alert.visible}
-        setAlert={(bool) => setAlert({ ...alert, visible: bool })}
+        setAlert={(bool: boolean) => setAlert({ ...alert, visible: bool })}
         alertOption={alert.option}
         text={alert.text}
       />

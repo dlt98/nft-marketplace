@@ -114,3 +114,9 @@ export interface SingleStepProps {
   active: boolean;
   onClick: () => void;
 }
+
+export interface WideButtonProps {
+  onClick: (arg0: any) => void;
+  disabled: boolean;
+  buttonText: string;
+}

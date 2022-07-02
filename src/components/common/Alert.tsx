@@ -15,7 +15,7 @@ const Alert = ({
     setTimeout(() => {
       setAlert(false);
       setVisibility(false);
-    }, 2000);
+    }, 4000);
   }, [visible]);
 
   return (
