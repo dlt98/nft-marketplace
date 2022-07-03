@@ -86,13 +86,20 @@ const createLayerInfo = (character = []) =>
 const isCharacterUnique = (character = []) =>
   !existingCharacters.find((i) => i.join("") === character.join(""));
 
+const getWeightSum = (array) =>
+  array.reduce((prevVal, currVal) => prevVal + currVal.weight, 0);
+
 const createCharacter = (characterType) => {
   let character = [];
   characterType.layers.forEach((layer) => {
-    const randElementNum = generateRandomNumber();
+    const weightSum = getWeightSum(layer.elements); //Used to calculate weight of traits
+    const randElementNum = generateRandomNumber(weightSum);
+
     let num = 0;
     layer.elements.forEach((element) => {
-      if (randElementNum >= 100 - element.weight) {
+      //Looping through all the elements weights to see which one will be randomly picked
+      //The hundred is there because of the total weights
+      if (randElementNum >= weightSum - element.weight) {
         num = element.id;
       }
     });
@@ -125,7 +132,7 @@ const startCreating = async () => {
     addMetadata(newCharacter, nftIndex);
     saveMetaDataSingleFile(nftIndex, metadataList);
     console.log(
-      `Created edition: ${nftIndex}, with Characteristics: ${newCharacter}`
+      `Character num: ${nftIndex}, with Characteristics: ${newCharacter}`
     );
 
     existingCharacters.push(newCharacter);
