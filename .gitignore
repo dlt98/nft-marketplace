@@ -25,3 +25,8 @@ yarn-error.log*
 # hardhat
 /artifacts
 /cache
+
+#art-generation
+/src/images/generated-images
+
+/art-generation/layers/*/*.png
