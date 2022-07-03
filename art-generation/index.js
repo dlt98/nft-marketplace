@@ -1,53 +1,38 @@
-const { createCanvas, loadImage } = require("canvas");
+const console = require("console");
 const {
   writeToMetadata,
   saveMetaDataSingleFile,
   saveImage,
   generateRandomNumber,
-  IMAGE_HEIGHT,
-  IMAGE_WIDTH,
   COLLECTION_DESC,
 } = require("./utils");
+
+const {
+  canvas,
+  ctx,
+  loadImage,
+  resetCanvas,
+  drawBackground,
+  signImage,
+} = require("./utils/canvas");
+
 const {
   startEditionFrom,
   editionSize,
   characterType,
 } = require("./layers/config");
-const console = require("console");
-const canvas = createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT);
-const ctx = canvas.getContext("2d");
 
 let metadataList = [];
 let attributesList = [];
 const existingCharacters = [];
 
-const signImage = (_sig) => {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 30pt Verdana";
-  ctx.textBaseline = "top";
-  ctx.textAlign = "left";
-  ctx.fillText(_sig, 40, 40);
-};
-
-const genColor = () => {
-  let hue = generateRandomNumber(360);
-  let pastel = `hsl(${hue}, 100%, 75%)`;
-  return pastel;
-};
-
-const drawBackground = () => {
-  ctx.fillStyle = genColor();
-  ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-};
-
-const addMetadata = (character, _edition) => {
-  const dateTime = Date.now();
+const addMetadata = (character, nftNum) => {
   const tempMetadata = {
     id: character.join(""),
-    name: `#${_edition}`,
+    name: `#${nftNum}`,
     description: COLLECTION_DESC,
-    edition: _edition,
-    date: dateTime,
+    edition: nftNum,
+    date: Date.now(),
     attributes: attributesList,
   };
 
@@ -78,8 +63,6 @@ const drawElement = (el) => {
   );
   addAttributes(el);
 };
-
-const resetCanvas = () => ctx.clearRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
 
 const drawImage = (layers, id) => {
   drawBackground();
