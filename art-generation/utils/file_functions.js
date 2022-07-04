@@ -1,5 +1,5 @@
 const fs = require("fs");
-const dir = "src/images/generated-images";
+const dir = "public/images/generated-images";
 
 const writeToMetadata = (json) =>
   fs.writeFileSync(`${dir}/_metadata.json`, JSON.stringify(json));

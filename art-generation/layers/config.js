@@ -13,3 +13,5 @@ module.exports = {
   startEditionFrom,
   characterType,
 };
+
+//https://trekhleb.medium.com/weighted-random-in-javascript-4748ab3a1500

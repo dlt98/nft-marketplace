@@ -6,7 +6,7 @@ const IMAGE_FORMAT = {
   height: IMAGE_HEIGHT,
 };
 
-const COLLECTION_SIZE = 1000;
+const COLLECTION_SIZE = 10;
 
 const COLLECTION_DESC =
   "These are some of the craziest dudes you will ever see. What is that dude wearing?";

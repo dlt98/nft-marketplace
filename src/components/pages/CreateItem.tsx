@@ -4,7 +4,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { IPFS_BASE_URL, IPFS_CONNECTION_URL } from "../../utils";
 import { PageProps } from "../../types";
 import { FileInput, Input, TextArea } from "../CreateItem";
-import { Label, Headline } from "../common";
+import { Label } from "../common";
 
 const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 

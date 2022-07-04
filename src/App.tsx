@@ -9,6 +9,7 @@ import {
   CreateItem,
   CreatorDashboard,
   MyAssets,
+  Minting,
 } from "./components/pages";
 
 import { Container, Sidebar } from "./components/layout/";
@@ -172,6 +173,18 @@ const App = () => {
                     profileChoice={profileChoice}
                     setProfileChoice={setProfileChoice}
                   />
+                </>
+              }
+            />
+            <Route
+              path="/minting"
+              element={
+                <>
+                  <Headline
+                    text="NFT random mint"
+                    description="This is where you will be able to mint an NFT that has been created from differently drawn layers"
+                  />
+                  <Minting marketplace={marketplace} nft={nft} />
                 </>
               }
             />

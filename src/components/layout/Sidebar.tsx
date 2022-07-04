@@ -15,6 +15,8 @@ const Sidebar = ({ walletAddress, profileImage, ethPrice }: SidebarProps) => {
           key={idx}
         />
       ))}
+      <div className="w-5/6 h-[1px] bg-black mx-auto" />
+      <NavItem title={"Minting"} url={"/minting"} icon={ethereumIcon} />
       <div className="mx-auto mt-auto mb-1">
         <div data-bs-toggle="modal" data-bs-target={`#ethModal`}>
           <NavItem

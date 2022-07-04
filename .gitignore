@@ -27,6 +27,6 @@ yarn-error.log*
 /cache
 
 #art-generation
-/src/images/generated-images
+/public/images/generated-images
 
 /art-generation/layers/*/*.png
