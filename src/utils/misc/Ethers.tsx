@@ -4,10 +4,10 @@ export const formatBigNumber = (bigNumber: BigNumberish): string =>
   ethers.utils.formatUnits(bigNumber, "ether");
 
 export const formatToEth = (price: string): BigNumber =>
-  ethers.utils.parseEther(price.toString());
+  ethers.utils.parseEther(price);
 
-export const sliceAddress = (address: string) => {
-  if (!address) return;
+export const sliceAddress = (address: string): string => {
+  if (!address) return "";
 
   const firstXCharacters = 5;
   const lastXCharacters = 4;

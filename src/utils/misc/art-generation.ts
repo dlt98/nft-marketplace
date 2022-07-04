@@ -6,7 +6,7 @@ const imagesDir = "/images/generated-images";
 export const mintedNfts: number[] = getMintedFromStorage();
 
 const getImageJson = async (id: number) =>
-  await fetch(`${imagesDir}/${id}.json`);
+  await fetch(`${imagesDir}/${id}.json`).then((res) => res.json());
 
 const getImage = async (id: number) => {
   const blob = await fetch(`${imagesDir}/${id}.png`).then((res) => res.blob());

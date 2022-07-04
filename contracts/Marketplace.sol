@@ -142,6 +142,43 @@ contract Marketplace is ReentrancyGuard {
     emit Offered(itemCount, address(item.nft), _itemId, _price, msg.sender);
   }
 
+  //Creating item to be placed in wallet
+  function randomMint(IERC721 _nft, uint256 _tokenId)
+    external
+    payable
+    nonReentrant
+  {
+    //This is 0.3 ETH
+    uint256 price = 300000000000000000;
+
+    require(msg.value >= price, "not enough ether to buy nft");
+
+    itemCount++;
+
+    Item memory mintedNft = Item(
+      itemCount,
+      _nft,
+      _tokenId,
+      price,
+      payable(msg.sender),
+      payable(msg.sender),
+      true
+    );
+
+    //Add new item to items mapping
+    items[itemCount] = mintedNft;
+
+    //emit Bought event
+    emit Bought(
+      itemCount,
+      address(mintedNft.nft),
+      mintedNft.tokenId,
+      mintedNft.price,
+      mintedNft.seller,
+      msg.sender
+    );
+  }
+
   function fetchMyNfts() public view returns (Item[] memory) {
     uint256 totalItemCount = itemCount;
     uint256 myNftCount = 0;
