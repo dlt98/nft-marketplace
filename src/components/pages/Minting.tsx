@@ -36,9 +36,6 @@ const Minting = ({ marketplace, nft }: PageProps) => {
       console.log("Sorry there are no NFT's left to mint");
     }
 
-    console.log("imageObj", imageObj);
-    console.log("typeof imageObj.image", typeof imageObj.image);
-    // setImage(imageObj.image!);
     await uploadToIpfs(imageObj.image!);
     setImageUploading(false);
   };

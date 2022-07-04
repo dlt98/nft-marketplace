@@ -18,15 +18,17 @@ const RARITY = [
 ];
 
 const LAYER_ORDER = [
-  { name: "body" },
-  { name: "clothing" },
-  { name: "clothing logo" },
+  { name: "base" },
   { name: "eyebrows" },
+  { name: "hair" },
+  { name: "headwear" },
+  { name: "shirt" },
+  { name: "necklace" },
   { name: "eyes" },
   { name: "eyewear" },
-  { name: "headwear" },
   { name: "mouth" },
   { name: "nose" },
+  { name: "piercing" },
 ];
 
 const LAYERS_DIR = "art-generation/layers";
