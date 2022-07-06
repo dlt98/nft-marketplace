@@ -2,3 +2,7 @@
 .active.nft-display {
   @apply flex gap-4;
 }
+
+.example-pic {
+  @apply w-[24%] transition-all shadow-lg rounded-2xl hover:scale-110;
+}

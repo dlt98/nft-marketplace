@@ -1,5 +1,5 @@
 import { COLLECTION_SIZE } from "../constants";
-import { getMintedFromStorage, saveMintedToStorage } from "./Storage";
+import { getMintedFromStorage } from "./Storage";
 
 const imagesDir = "/images/generated-images";
 
@@ -24,8 +24,6 @@ export const getFirstAvailableArt = async () => {
 
   for (let i = 1; i <= COLLECTION_SIZE; i++) {
     if (!mintedNfts.includes(i)) {
-      mintedNfts.push(i);
-      saveMintedToStorage(mintedNfts);
       necessaryFiles.json = await getImageJson(i);
       necessaryFiles.image = await getImage(i);
       break;

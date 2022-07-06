@@ -56,15 +56,6 @@ export interface SelectProps {
     actionMeta: ActionMeta<string>
   ) => void;
 }
-export interface SelectProps {
-  options: any;
-  value: string;
-  onChange: (
-    newValue: SingleValue<string>,
-    actionMeta: ActionMeta<string>
-  ) => void;
-}
-
 export interface CopyProps {
   text: string;
   className: string;
@@ -74,8 +65,9 @@ export interface CopyProps {
 
 export interface ButtonProps {
   text: string;
-  onClick?: () => void;
+  onClick?: (arg0?: any) => void;
   href?: string;
+  disabled?: boolean;
 }
 
 interface Input {

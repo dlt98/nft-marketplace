@@ -39,8 +39,6 @@ export const getSpecificSettingsFromStorage = (
 ): UserSettings | null => {
   const storedValues = getFromStorage();
 
-  console.log("storedValues", storedValues);
-
   //Returns undefined if nothing is there
   return storedValues.find((value) => value.address === address) || null;
 };

@@ -1,5 +1,5 @@
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { PageProps } from "../../types";
 import {
@@ -8,9 +8,19 @@ import {
   getFirstAvailableArt,
   NFT_MINT_PRICE,
   formatToEth,
+  COLLECTION_SIZE,
+  getMintedFromStorage,
+  saveMintedToStorage,
 } from "../../utils";
 
-import { Button } from "../common";
+import {
+  example1,
+  example2,
+  example3,
+  example4,
+} from "../../images/art-generation-examples";
+
+import MintingButton from "../Minting/MintingButton";
 
 const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 
@@ -18,6 +28,7 @@ const Minting = ({ marketplace, nft }: PageProps) => {
   const [image, setImage] = useState<string>("");
   const [creatingNft, setCreatingNft] = useState(false);
   const [showNft, setShowNft] = useState(false);
+  const mintingNft = useRef(0);
 
   const uploadToIpfs = async (img: any) => {
     if (!img) return false;
@@ -32,6 +43,16 @@ const Minting = ({ marketplace, nft }: PageProps) => {
     } catch (error) {
       console.log("There was an issue uploading to ipfs: ", error);
     }
+  };
+
+  const successfullMint = () => {
+    setShowNft(true);
+    setCreatingNft(false);
+
+    const mintedItems = getMintedFromStorage();
+
+    mintedItems.push(mintingNft.current);
+    saveMintedToStorage(mintedItems);
   };
 
   const mint = async (res: any) => {
@@ -49,8 +70,7 @@ const Minting = ({ marketplace, nft }: PageProps) => {
 
     await (await marketplace.randomMint(nft.address, id, priceToPay)).wait();
 
-    setShowNft(true);
-    setCreatingNft(false);
+    successfullMint();
   };
 
   const createNFT = async (
@@ -83,15 +103,44 @@ const Minting = ({ marketplace, nft }: PageProps) => {
 
     if (!ipfsImage) return;
 
+    mintingNft.current = imageObj.json.edition;
     createNFT(ipfsImage, imageObj.json.name, imageObj.json.description);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full space-y-8">
-      {!!showNft && <img src={image} alt="Newly minted NFT" className="w-96" />}
-      {!creatingNft && (
-        <Button text="Mint random NFT" onClick={mintRandomNft} />
-      )}
+    <div className="mt-16">
+      <h1 className="mx-auto text-6xl font-light transition-all border-b-2 w-max hover:border-b-4 ">
+        Welcome to the land of the Coolios
+      </h1>
+      <div className="space-y-2 my-11">
+        <p className="text-xl text-center text-green-900">
+          Minting has already started, so jump in!
+        </p>
+        <p className="text-2xl text-center">{`${
+          getMintedFromStorage().length
+        }/${COLLECTION_SIZE}`}</p>
+      </div>
+      <div className="flex flex-col items-center justify-center my-10 space-y-8">
+        <MintingButton
+          nftImage={showNft ? image : ""}
+          onClick={() => {
+            if (creatingNft) return;
+            mintRandomNft();
+          }}
+        />
+      </div>
+      <p className="mb-4 text-lg text-center ">
+        Examples of what you could get are here
+      </p>
+      <div className="flex justify-between">
+        {[example1, example2, example3, example4].map((item, idx) => (
+          <img
+            src={item}
+            alt={`art-generation-example ${idx}`}
+            className="example-pic"
+          />
+        ))}
+      </div>
     </div>
   );
 };
