@@ -114,3 +114,8 @@ export interface SingleStepProps {
   active: boolean;
   onClick: () => void;
 }
+
+export interface MintingButtonProps {
+  nftImage: string;
+  onClick: () => void;
+}
