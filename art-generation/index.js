@@ -98,7 +98,6 @@ const createCharacter = (characterType) => {
     let num = 0;
     layer.elements.forEach((element) => {
       //Looping through all the elements weights to see which one will be randomly picked
-      //The hundred is there because of the total weights
       if (randElementNum >= weightSum - element.weight) {
         num = element.id;
       }
