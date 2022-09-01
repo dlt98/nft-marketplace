@@ -6,15 +6,15 @@ const IMAGE_FORMAT = {
   height: IMAGE_HEIGHT,
 };
 
-const COLLECTION_SIZE = 10;
+const COLLECTION_SIZE = 100;
 
 const COLLECTION_DESC =
   "These are some of the craziest dudes you will ever see. What is that dude wearing?";
 
 const RARITY = [
-  { key: "", val: "original", weight: 50 },
-  { key: "_r", val: "rare", weight: 10 },
   { key: "_sr", val: "super rare", weight: 1 },
+  { key: "_r", val: "rare", weight: 10 },
+  { key: "", val: "original", weight: 50 },
 ];
 
 const LAYER_ORDER = [

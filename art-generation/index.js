@@ -79,7 +79,7 @@ const createLayerInfo = (character = []) =>
       name: layer.name,
       position: layer.position,
       size: layer.size,
-      selectedElement: selectedElement,
+      selectedElement,
     };
   });
 
@@ -93,16 +93,17 @@ const createCharacter = (characterType) => {
   let character = [];
   characterType.layers.forEach((layer) => {
     const weightSum = getWeightSum(layer.elements); //Used to calculate weight of traits
-    const randElementNum = generateRandomNumber(weightSum);
+    let randElementNum = generateRandomNumber(weightSum);
 
-    let num = 0;
-    layer.elements.forEach((element) => {
-      //Looping through all the elements weights to see which one will be randomly picked
-      if (randElementNum >= weightSum - element.weight) {
-        num = element.id;
+    layer.elements.some((element) => {
+      //Randomly sorts the layers the elemtnt that reduces the random number to 0 or less is the one that gets chosen
+      randElementNum -= element.weight;
+
+      if (randElementNum <= 0) {
+        character.push(element.id);
+        return true;
       }
     });
-    character.push(num);
   });
   return character;
 };
