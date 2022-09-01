@@ -102,7 +102,7 @@ const createCharacter = (characterType) => {
       if (randElementNum <= 0) {
         character.push(element.id);
         return true;
-      }
+      } else return false;
     });
   });
   return character;
