@@ -1,9 +1,7 @@
-import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRef, useState } from "react";
 
 import { PageProps } from "../../types";
 import {
-  IPFS_CONNECTION_URL,
   IPFS_BASE_URL,
   getFirstAvailableArt,
   NFT_MINT_PRICE,
@@ -11,6 +9,7 @@ import {
   COLLECTION_SIZE,
   getMintedFromStorage,
   saveMintedToStorage,
+  client,
 } from "../../utils";
 
 import {
@@ -21,8 +20,6 @@ import {
 } from "../../images/art-generation-examples";
 
 import MintingButton from "../Minting/MintingButton";
-
-const client = ipfsHttpClient({ url: IPFS_CONNECTION_URL });
 
 const Minting = ({ marketplace, nft }: PageProps) => {
   const [image, setImage] = useState<string>("");

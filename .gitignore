@@ -28,3 +28,5 @@ yarn-error.log*
 
 #art-generation
 /public/images/generated-images
+
+.env
