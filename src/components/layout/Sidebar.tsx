@@ -2,7 +2,7 @@ import NavItem from "./NavItem";
 import { NAV_ITEMS, copyToClipboard } from "../../utils";
 import { SidebarProps } from "../../types";
 import "../../styles/navigation.css";
-import { ethereumIcon } from "../../images";
+import { ethereumIcon, bruno } from "../../images";
 
 const Sidebar = ({ walletAddress, profileImage, ethPrice }: SidebarProps) => {
   return (
@@ -15,6 +15,8 @@ const Sidebar = ({ walletAddress, profileImage, ethPrice }: SidebarProps) => {
           key={idx}
         />
       ))}
+      <div className="w-5/6 h-[1px] bg-black mx-auto" />
+      <NavItem title={"Minting"} url={"/minting"} icon={bruno} />
       <div className="mx-auto mt-auto mb-1">
         <div data-bs-toggle="modal" data-bs-target={`#ethModal`}>
           <NavItem

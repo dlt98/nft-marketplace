@@ -39,11 +39,19 @@ export const getSpecificSettingsFromStorage = (
 ): UserSettings | null => {
   const storedValues = getFromStorage();
 
-  console.log("storedValues", storedValues);
-
   //Returns undefined if nothing is there
   return storedValues.find((value) => value.address === address) || null;
 };
 
 const setToStorage = (currentData: UserSettings[]): void =>
   localStorage.setItem("userSettings", JSON.stringify(currentData));
+
+export const saveMintedToStorage = (array: number[]) => {
+  localStorage.setItem("mintedNfts", JSON.stringify(array));
+};
+
+export const getMintedFromStorage = (): number[] => {
+  const storage = localStorage.getItem("mintedNfts");
+
+  return storage ? JSON.parse(storage) : [];
+};
