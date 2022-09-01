@@ -13,23 +13,6 @@ import example12 from "./example12.png";
 import example13 from "./example13.png";
 import example14 from "./example14.png";
 
-export {
-  example1,
-  example2,
-  example3,
-  example4,
-  example5,
-  example6,
-  example7,
-  example8,
-  example9,
-  example10,
-  example11,
-  example12,
-  example13,
-  example14,
-};
-
 const images = [
   example1,
   example2,

@@ -12,12 +12,7 @@ import {
   client,
 } from "../../utils";
 
-import {
-  example1,
-  example2,
-  example3,
-  example4,
-} from "../../images/art-generation-examples";
+import images from "../../images/art-generation-examples";
 
 import MintingButton from "../Minting/MintingButton";
 
@@ -130,7 +125,7 @@ const Minting = ({ marketplace, nft }: PageProps) => {
         Examples of what you could get are here
       </p>
       <div className="flex justify-between">
-        {[example1, example2, example3, example4].map((item, idx) => (
+        {images.map((item, idx) => (
           <img
             src={item}
             alt={`art-generation-example ${idx}`}
